@@ -1,31 +1,38 @@
-# 浮世一生 · 古风人生模拟游戏
+# 浮世一生 · 事件人生模拟
 
-**原创、免费、无广告的手机网页游戏**，支持 iPhone Safari、Android 和电脑浏览器。非《开局已是巅峰》的官方游戏，不复制其受版权保护的剧情与美术。
+免费、无广告、原创古风人生小游戏。iPhone Safari 可直接游玩，不需安装 App 或登录。游戏非《开局已是巅峰》官方作品，不复用其受版权保护的内容。
 
-- 在线游戏地址（**GitHub Pages 发布成功后**）：https://alex1122341.github.io/Peak-Life-Game/
-- 源码：`index.html`（单文件，包含 HTML、CSS 与 JavaScript）
-- 免费，不需要登录、观看广告或安装 App。
+**在线游玩：** https://alex1122341.github.io/Peak-Life-Game/?v=4
 
-## 主要玩法
-- 四种出身与天赋，自定义姓名，六大职业和升级路线。
-- 30 种带多种选择的随机事件；年度行动与数值成长。
-- 产业、宅院、宝物、门客、婚姻子嗣、家族继承。
-- 人生结局、成就图鉴、史书记录。
-- 自动存档及 JSON 存档导入与导出。
+## 游戏机制（v4）
 
-## 首次启用 GitHub Pages（只需一次）
+本版本取消了“每年三次行动”和所有主动刷属性、买卖、晋升、拜访按钮。人生完全通过时间、事件与选择推进。
 
-GitHub Actions 自动部署脚本已配置为 `.github/workflows/pages.yml`，**需要 Pages 发布来源设为 GitHub Actions**，不能选「Deploy from a branch」。
+- **童年从六岁开始：** 六岁入塾、十岁童试、十二岁择学、十五岁深造、十八岁择业；之后22、27、35、45、55、65、75岁迎来关键人生阶段。
+- **自然时间：** 1×速度默认每秒一个游戏日。支持暂停、2×、4×；事件出现时会自动暂停。随机事件随时间自然出现，成人后继续追加商贸、家庭、官场等故事。
+- **属性：** 智略、武艺、魅力、德望只能通过事件和选择增加，**没有通过点击行动刷属性的机制**。
+- **职业和经营：** 成年时按事件选择职业；后续的晋升、转行、购买田产、经营商铺、升级住宅、结交知己、结婚、添丁均通过事件推动。
+- **实时展示：** 可见小人活动场景、四季变化、动态游戏日期、银两增减飘字、人物成长属性、月度自动收入。
+- **多结局与继承：** 人生结局、成就图鉴、志书及家族传承。
+- **存档：** 每次事件选择与定期自动保存，设置中可导出/导入 JSON 备份。
 
-1. 打开 [仓库 Settings → Pages](https://github.com/Alex1122341/Peak-Life-Game/settings/pages)。
-2. 在 **Build and deployment → Source** 中选择 **GitHub Actions**。
-3. 访问 [Actions → Deploy game to GitHub Pages](https://github.com/Alex1122341/Peak-Life-Game/actions/workflows/pages.yml)，找到失败的运行，点 **Re-run jobs**。也可再次编辑并提交任意文件触发部署。
-4. 看到绿色对勾后，在 iPhone Safari 打开 https://alex1122341.github.io/Peak-Life-Game/ 。
+### 已有存档
 
-> 如果出现 “Get Pages site failed … Not Found”，说明 Pages 没有启用。仓库 GitHub App 连接器无法替代仓库管理员修改 Pages 设置。
+会兼容原版 `fushi-life-v1` 存档。已经长大的人物会从当前年龄继续，新增的学业成长线从**新游戏**开始体验。想从六岁重新开始，可在游戏「设置 → 新游戏」重启，建议事先导出原存档。
 
-## iPhone 使用
-Safari 打开网站 →「分享」→「添加到主屏幕」。游戏进度保存在当前浏览器，本机清除 Safari 网站数据可能删除进度；可以在游戏设置中导出 JSON 备份。
+### 项目文件
 
-## 验证与授权
-通过 Node.js 语法检查和模拟 DOM 逻辑测试，尚未在真实 iPhone 上验证。原创新游戏；源码采用 MIT License，不含第三方统计、广告或外部 API。
+- `index.html` — UI 与核心游戏状态、人生结算机制。
+- `story.js` — 年龄里程碑、升学考试、职业家族及其他随机事件。
+- `visual.js`、`visual.css` — 小镇场景、人物动画、自动时钟、浮动收益。
+- `tests/browser-smoke.cjs` — 自动化测试（模拟浏览器 DOM）。
+- `.github/workflows/qa.yml` — 自动运行 JavaScript 语法与游戏逻辑测试。
+- `.github/workflows/pages.yml` — 自动发布到 GitHub Pages。
+
+### 在 iPhone 上玩
+
+在 Safari 打开线上地址 → 点击分享 → 添加到主屏幕。进度储存在本机 Safari 的网站数据中，清除网站数据可能删除存档。
+
+### 测试和许可
+
+GitHub Actions 自动检查了六岁到十八岁事件线、属性事件成长、时间控制、月度收入、随机弹窗、页面导航和基本 JavaScript 语法。尚未经过真实 iPhone Safari 实机测试。源码采用 MIT License。
