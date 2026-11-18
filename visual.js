@@ -72,7 +72,7 @@ function floater(t,bad){
  $('#float-layer').appendChild(el);setTimeout(function(){el.remove()},2600);
 }
 function drawPeople(s){
- var key=[s.job,s.name,s.spouse,s.children.length].join('|');if(key===lastPersonKey)return;lastPersonKey=key;
+ var key=[s.age<18?'youth':'adult',s.job,s.name,s.spouse,s.children.length].join('|');if(key===lastPersonKey)return;lastPersonKey=key;
  var roles=[[s.age<18?'child':s.job,s.name],[s.spouse?'spouse':s.age<18?'scholar':'merchant',s.spouse?'家人':s.age<18?'先生':'商贾'],[s.children.length?'child':'farmer',s.children.length?'孩童':s.age<18?'同窗':'农人']];
  $('#world-people').innerHTML=roles.map(function(a,i){return '<div class="actor'+(i===0?' actor-main':'')+'" role="button" tabindex="0" aria-label="'+esc(a[1])+'" data-world-character="'+i+'" style="left:'+([21,53,78][i])+'%;bottom:'+([35,49,32][i])+'px;--duration:'+([7,11,9][i])+'s;--delay:-'+([2,5,1][i])+'s"><div class="actor-body">'+doll(a[0])+'</div><div class="actor-label">'+esc(a[1].slice(0,8))+'</div></div>'}).join('');
 }
