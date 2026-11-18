@@ -55,7 +55,7 @@ const initialStats={...s.stats};
 world.getWorld().day=89;
 world.getWorld().eventAt=999999;
 world.forceDays(3);
-assert.deepEqual(s.stats,initialStats,'passive quarterly stat increases must be removed');
+assert.equal(JSON.stringify(s.stats),JSON.stringify(initialStats),'passive quarterly stat increases must be removed');
 const milestoneMap={10:'age_10',12:'age_12',15:'age_15',18:'age_18'};
 for(let next=7;next<=18;next++){
   if(s.event)choice();
