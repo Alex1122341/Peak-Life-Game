@@ -79,8 +79,8 @@ body:not(.playing) .mast .hero-kpis{display:grid;margin-top:8px}
 .world-ticker{font-size:11px;color:#5f6c56;background:#eaf0dc;min-height:26px;padding:6px 11px;display:flex;gap:7px;align-items:center}
 .world-ticker .dot{width:6px;height:6px;background:#93ad6e;border-radius:50%;flex:none;animation:pulse 2s infinite}
 body.playing .body{padding-top:9px}
-body.playing #screen>.card:first-child{display:none}
-body.playing #screen>.card:nth-child(2){display:none}
+body.playing.world-home #screen>.card:first-child{display:none}
+body.playing.world-home #screen>.card:nth-child(2){display:none}
 body.playing #screen>.card .section-title{font-family:"STKaiti","KaiTi",serif;font-size:18px}
 body.playing #screen .action{min-height:81px;background:#fffaf0}
 body.playing #screen .action strong{font-size:13px}
