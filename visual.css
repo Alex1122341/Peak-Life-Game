@@ -79,8 +79,8 @@ body:not(.playing) .mast .hero-kpis{display:grid;margin-top:8px}
 .world-ticker{font-size:11px;color:#5f6c56;background:#eaf0dc;min-height:26px;padding:6px 11px;display:flex;gap:7px;align-items:center}
 .world-ticker .dot{width:6px;height:6px;background:#93ad6e;border-radius:50%;flex:none;animation:pulse 2s infinite}
 body.playing .body{padding-top:9px}
-body.playing.world-home #screen>.card:first-child{display:none}
-body.playing.world-home #screen>.card:nth-child(2){display:none}
+
+
 body.playing #screen>.card .section-title{font-family:"STKaiti","KaiTi",serif;font-size:18px}
 body.playing #screen .action{min-height:81px;background:#fffaf0}
 body.playing #screen .action strong{font-size:13px}
@@ -101,3 +101,22 @@ body.playing .dialog h2{color:#3a5945}
 @media(max-width:370px){.world-date{font-size:13px}.time-btn{min-width:33px;padding:0 3px}.scene{height:258px}.house.window{left:12%}.world-resource strong{font-size:13px}.actor{scale:.90}}
 @media(min-width:600px){.scene{height:310px}.world-shell{margin:0 0 9px}}
 @media(prefers-reduced-motion:reduce){.actor,.actor-body,.cloud,.butterfly,.sun,.world-ticker .dot{animation:none!important}.float-text{animation:rise 2.5s ease-out forwards}}
+
+
+/* 人生阶段与里程碑：事件驱动版 */
+.stage-head{display:flex;align-items:center;justify-content:space-between;margin:0 0 12px;gap:10px}
+.stage-pill{display:inline-flex;background:#dcebd9;color:#396344;border:1px solid #afcda7;border-radius:99px;font-size:12px;font-weight:800;padding:4px 12px}
+.stage-age{color:#a18149;font-size:19px;font-weight:850;font-family:"STKaiti","KaiTi",serif}
+.life-milestone{border:1px solid #d1c395;background:linear-gradient(120deg,#fff9e6,#edf4e8);border-radius:12px;padding:13px 14px;position:relative}
+.life-milestone:before{content:"◉";color:#b89449;font-size:12px;margin-right:7px}
+.life-milestone strong{font-family:"STKaiti","KaiTi",serif;font-size:18px;color:#4b634b}
+.life-milestone p{font-size:13px;color:#697863;margin:7px 0}
+.life-milestone small{font-size:11px;color:#96784e}
+.stage-track{display:grid;gap:8px}
+.stage-track-item{position:relative;border-left:3px solid #c2d1bd;background:#f5f2e8;border-radius:3px 10px 10px 3px;padding:9px 11px}
+.stage-track-item.current-stage{background:#eaf2e7;border-color:#5e997b}
+.stage-track-item strong{display:block;color:#425a45;font-size:14px}
+.stage-track-item small{font-size:11px;color:#81907f;line-height:1.5;display:block;margin-top:3px}
+.world-resource:nth-child(4) strong{font-size:13px;letter-spacing:-.04em}
+body.playing .body{padding-top:12px}
+body.playing .card{border-color:#e4dcc8}
