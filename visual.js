@@ -77,7 +77,7 @@ function drawPeople(s){
  $('#world-people').innerHTML=roles.map(function(a,i){return '<div class="actor'+(i===0?' actor-main':'')+'" role="button" tabindex="0" aria-label="'+esc(a[1])+'" data-world-character="'+i+'" style="left:'+([21,53,78][i])+'%;bottom:'+([35,49,32][i])+'px;--duration:'+([7,11,9][i])+'s;--delay:-'+([2,5,1][i])+'s"><div class="actor-body">'+doll(a[0])+'</div><div class="actor-label">'+esc(a[1].slice(0,8))+'</div></div>'}).join('');
 }
 function refresh(s){
- town.classList.toggle('hidden',!s||s.gameOver);document.body.classList.toggle('playing',!!s&&!s.gameOver);
+ town.classList.toggle('hidden',!s||s.gameOver);document.body.classList.toggle('playing',!!s&&!s.gameOver);document.body.classList.toggle('world-home',!!s&&document.querySelector('[data-tab="home"].active')!==null);
  if(!s)return;
  var w=getWorld(s),month=Math.min(12,Math.floor((w.day-1)/30)+1),dom=(w.day-1)%30+1;
  var season=['春','春','春','夏','夏','夏','秋','秋','秋','冬','冬','冬'][month-1];
