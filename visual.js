@@ -44,7 +44,7 @@ town.innerHTML='<div class="world-bar"><div class="world-date" id="world-date">�
  '<div class="world-resources"><div class="world-resource"><strong class="money" id="world-silver">0</strong><small>银两</small></div>'+
  '<div class="world-resource"><strong id="world-fame">0</strong><small>名望</small></div>'+
  '<div class="world-resource"><strong id="world-income">0</strong><small>每月预计收入</small></div>'+
- '<div class="world-resource"><strong id="world-ap">3/3</strong><small>行动次数</small></div></div>'+
+ '<div class="world-resource"><strong id="world-ap">蒙学</strong><small>人生阶段</small></div></div>'+
  '<div class="world-stats">'+
  ['wis','force','charm','virtue'].map(function(k,i){return '<div class="world-stat">'+['智略','武艺','魅力','德望'][i]+' <span class="number" id="world-'+k+'">0</span><div class="bar"><i id="bar-'+k+'"></i></div></div>'}).join('')+
  '</div><div class="world-ticker"><span class="dot"></span><span id="world-news">四季流转，命运不息。</span></div>';
@@ -53,9 +53,9 @@ var months=['','正月','二月','三月','四月','五月','六月','七月','�
 var lastNow=performance.now(),saveElapsed=0,lastPersonKey='',lastLog='',lastMoney=null,lastState=null;
 function getWorld(s){
  if(!s.world||!Number.isFinite(s.world.day)||s.world.day<1||s.world.day>360)
-  s.world={day:1,yearKey:s.year,speed:1,elapsed:0,carry:0,incomePaid:0,globalDay:(s.year-1)*360,eventAt:(s.year-1)*360+roll(17,30)};
+  s.world={day:1,yearKey:s.year,speed:1,elapsed:0,carry:0,incomePaid:0,globalDay:(s.year-1)*360,eventAt:(s.year-1)*360+roll(50,85)};
  var w=s.world;
- if(w.yearKey!==s.year){w.day=1;w.yearKey=s.year;w.incomePaid=0;w.carry=0;w.elapsed=0;w.eventAt=w.globalDay+roll(17,30)}
+ if(w.yearKey!==s.year){w.day=1;w.yearKey=s.year;w.incomePaid=0;w.carry=0;w.elapsed=0;w.eventAt=w.globalDay+roll(50,85)}
  if(![0,1,2,4].includes(Number(w.speed)))w.speed=1;
  if(!Number.isFinite(w.globalDay))w.globalDay=(s.year-1)*360+w.day-1;
  if(!Number.isFinite(w.elapsed))w.elapsed=0;
@@ -73,7 +73,7 @@ function floater(t,bad){
 }
 function drawPeople(s){
  var key=[s.job,s.name,s.spouse,s.children.length].join('|');if(key===lastPersonKey)return;lastPersonKey=key;
- var roles=[[s.job,s.name],[s.spouse?'spouse':'merchant',s.spouse?'家人':'商贾'],[s.children.length?'child':'farmer',s.children.length?'孩童':'农人']];
+ var roles=[[s.age<18?'child':s.job,s.name],[s.spouse?'spouse':s.age<18?'scholar':'merchant',s.spouse?'家人':s.age<18?'先生':'商贾'],[s.children.length?'child':'farmer',s.children.length?'孩童':s.age<18?'同窗':'农人']];
  $('#world-people').innerHTML=roles.map(function(a,i){return '<div class="actor'+(i===0?' actor-main':'')+'" role="button" tabindex="0" aria-label="'+esc(a[1])+'" data-world-character="'+i+'" style="left:'+([21,53,78][i])+'%;bottom:'+([35,49,32][i])+'px;--duration:'+([7,11,9][i])+'s;--delay:-'+([2,5,1][i])+'s"><div class="actor-body">'+doll(a[0])+'</div><div class="actor-label">'+esc(a[1].slice(0,8))+'</div></div>'}).join('');
 }
 function refresh(s){
@@ -86,7 +86,7 @@ function refresh(s){
  $('#world-scene').dataset.season=season;
  $('#world-progress').style.width=(w.day/360*100).toFixed(1)+'%';
  $('#world-silver').textContent=fmt(s.silver);$('#world-fame').textContent=fmt(s.fame);
- var econ=api.getEconomy();$('#world-income').textContent=fmt((econ.wage+econ.shops)/12);$('#world-ap').textContent=s.ap+'/3';
+ var econ=api.getEconomy();$('#world-income').textContent=fmt((econ.wage+econ.shops)/12);$('#world-ap').textContent=s.age<6?'幼年':s.age<12?'蒙学':s.age<15?'县学前':s.age<18?'深造':s.age<35?'青年':s.age<55?'盛年':'晚景';
  ['wis','force','charm','virtue'].forEach(function(k){$('#world-'+k).textContent=fmt(s.stats[k]);$('#bar-'+k).style.width=Math.min(100,s.stats[k]/200*100)+'%'});
  town.querySelectorAll('[data-time-speed]').forEach(function(el){var on=Number(el.dataset.timeSpeed)===Number(w.speed);el.classList.toggle('selected',on);el.setAttribute('aria-pressed',String(on))});
  drawPeople(s);
@@ -98,21 +98,17 @@ function monthEnd(s,w){
  var econ=api.getEconomy();w.carry+=Math.max(0,(econ.wage+econ.shops)/12);
  var amount=Math.floor(w.carry);w.carry-=amount;
  if(amount){s.silver+=amount;w.incomePaid+=amount;w.justPaid=true;floater('+'+fmt(amount)+' 两');announce('岁月经营 · 俸禄与产业收入 +'+fmt(amount)+' 两')}
- if((w.day-1)%90===0){
-  var stat={scholar:'wis',merchant:'charm',farmer:'virtue',soldier:'force',healer:'wis',artisan:'wis'}[s.job]||'wis';
-  var names={wis:'智略',charm:'魅力',virtue:'德望',force:'武艺'};
-  s.stats[stat]=Math.min(300,s.stats[stat]+1);floater('+1 '+names[stat]);announce('日积月累 · '+names[stat]+'提升 1 点');
- }
+ 
  api.save();api.render();w.justPaid=false;
 }
 function nextDay(s,w){
  w.day++;w.globalDay++;
  if((w.day-1)%30===0&&w.day>1)monthEnd(s,w);
  if(w.day>360){
-  w.day=1;w.elapsed=0;api.annual();w.yearKey=s.year;w.eventAt=w.globalDay+roll(20,40);return true;
+  w.day=1;w.elapsed=0;api.annual();w.yearKey=s.year;w.eventAt=w.globalDay+roll(55,90);return true;
  }
  if(w.globalDay>=w.eventAt){
-  w.eventAt=w.globalDay+roll(19,40);
+  w.eventAt=w.globalDay+roll(50,85);
   if(api.triggerEvent()){announce('新的剧情出现 · 时间暂停，等待选择');return true}
  }
  return false;
@@ -142,8 +138,8 @@ town.addEventListener('click',function(e){
  if(speed){var w=getWorld(s);w.speed=Number(speed.dataset.timeSpeed);api.save();refresh(s);announce(w.speed?'时光以 '+w.speed+'× 自动流转':'时光暂停，点击速度恢复');return}
  var actor=e.target.closest('[data-world-character]');
  if(actor){var i=Number(actor.dataset.worldCharacter);
-  announce(i===0?s.name+'正在'+({scholar:'研读卷宗',merchant:'经营商铺',farmer:'耕作田地',soldier:'巡视操练',healer:'采药行医',artisan:'修造器物'}[s.job]):i===1?(s.spouse?'家人来访，院中多了几分温暖':'商贾正在集市巡游'):(s.children.length?'孩子正在院中玩耍':'农人在田间忙碌'));floater('人间烟火');return}
- var house=e.target.closest('[data-world-place]');if(house)announce('这里是'+house.dataset.worldPlace+' · 在下方页面可进行相关行动');
+  announce(i===0&&s.age<18?s.name+'正在书院上课':i===0?s.name+'正在'+({scholar:'研读卷宗',merchant:'经营商铺',farmer:'耕作田地',soldier:'巡视操练',healer:'采药行医',artisan:'修造器物'}[s.job]):i===1?(s.spouse?'家人来访，院中多了几分温暖':'商贾正在集市巡游'):(s.children.length?'孩子正在院中玩耍':'农人在田间忙碌'));floater('人间烟火');return}
+ var house=e.target.closest('[data-world-place]');if(house)announce('这里是'+house.dataset.worldPlace+' · 生活和经营随事件自然展开');
 });
 town.addEventListener('keydown',function(e){if((e.key==='Enter'||e.key===' ')&&e.target.closest('[data-world-character]')){e.preventDefault();e.target.click()}});
 document.addEventListener('visibilitychange',function(){lastNow=performance.now();if(document.hidden)api.save()});
