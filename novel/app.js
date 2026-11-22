@@ -10,7 +10,24 @@ function toast(msg){const el=$("toast");el.textContent=msg;el.classList.remove("
 function cn(n){const a=["零","一","二","三","四","五","六","七","八","九","十"];if(n<=10)return a[n];if(n<20)return "十"+(n%10?a[n%10]:"");if(n<100)return a[Math.floor(n/10)]+"十"+(n%10?a[n%10]:"");return String(n);}
 function titleFor(id){const ch=chapters.find(x=>x.id===id);return ch?"第"+cn(id)+"章："+ch.title:"尚未开始阅读";}
 function applyTheme(){document.body.dataset.theme=["paper","sepia","night"].includes(state.theme)?state.theme:"paper";document.documentElement.style.setProperty("--font-size",clamp(state.fontSize,16,27)+"px");document.documentElement.style.setProperty("--leading",clamp(state.leading,1.7,2.3));$("font-size").value=state.fontSize;$("font-size-label").textContent=state.fontSize+"px";document.querySelectorAll("[data-theme-option]").forEach(el=>el.classList.toggle("selected",el.dataset.themeOption===state.theme));document.querySelectorAll("[data-leading]").forEach(el=>el.classList.toggle("selected",Number(el.dataset.leading)===Number(state.leading)));}
-function listChapters(target){target.replaceChildren();chapters.forEach(ch=>{const button=document.createElement("button");button.className="chapter-item"+(current===ch.id?" active":"");button.type="button";const label=document.createElement("span");label.textContent=titleFor(ch.id);const tail=document.createElement("span");tail.className="chapter-tail";const p=state.progress[ch.id];tail.textContent=p&&p.ratio>0?Math.round(p.ratio*100)+"%":ch.id===state.chapter?"上次阅读":"›";button.append(label,tail);button.addEventListener("click",()=>openChapter(ch.id,true));target.appendChild(button);});}
+const volumeNames=["死亡档案·西雅图","北境零号","无名之城","影子国界","记忆守门人","白塔深处","幽灵战线","第七个选择","回声审判","人间归档"];
+function listChapters(target){
+  target.replaceChildren();
+  const expandedVolume=Math.floor(((current||state.chapter||1)-1)/50);
+  for(let vol=0;vol<Math.ceil(chapters.length/50);vol++){
+    const details=document.createElement("details");details.className="volume-group";details.open=(vol===expandedVolume);
+    const summary=document.createElement("summary");summary.textContent="第"+cn(vol+1)+"卷 · "+volumeNames[vol]+"  ("+(vol*50+1)+"—"+Math.min(chapters.length,(vol+1)*50)+")";
+    details.appendChild(summary);
+    for(const ch of chapters.slice(vol*50,vol*50+50)){
+      const button=document.createElement("button");button.className="chapter-item"+(current===ch.id?" active":"");button.type="button";
+      const label=document.createElement("span");label.textContent=titleFor(ch.id);
+      const tail=document.createElement("span");tail.className="chapter-tail";const p=state.progress[ch.id];
+      tail.textContent=p&&p.ratio>0?Math.round(p.ratio*100)+"%":ch.id===state.chapter?"上次阅读":"›";
+      button.append(label,tail);button.addEventListener("click",()=>openChapter(ch.id,true));details.appendChild(button);
+    }
+    target.appendChild(details);
+  }
+}
 function renderShelf(){$("shelf").classList.remove("hidden");$("reader").classList.add("hidden");page="shelf";current=0;listChapters($("shelf-chapters"));const id=Math.min(Math.max(1,state.chapter||1),chapters.length||1);$("resume-title").textContent=titleFor(id);const p=state.progress[id];$("resume-sub").textContent=p&&p.ratio>0?"已阅读 "+Math.round(p.ratio*100)+"% · 自动保存":"点击即可开始阅读，进度自动保存";$("chapter-total").textContent="共 "+chapters.length+" 章";$("count-label").textContent=chapters.length+" 章";$("reading-progress").style.width="0%";window.scrollTo(0,0);}
 function parseText(raw){return String(raw).replace(/\r\n?/g,"\n").trim().split(/\n\s*\n+/).map(s=>s.trim()).filter(Boolean);}
 function scrollRatio(){const max=Math.max(0,document.documentElement.scrollHeight-window.innerHeight);return max>0?clamp(window.scrollY/max,0,1):0;}
@@ -74,6 +91,31 @@ $("font-size").addEventListener("input",e=>{state.fontSize=clamp(e.target.value,
 $("export-btn").addEventListener("click",()=>{savePosition(true);const blob=new Blob([JSON.stringify({app:"seattle-death-file-reader",version:1,exportedAt:new Date().toISOString(),state:state},null,2)],{type:"application/json"});const a=document.createElement("a"),u=URL.createObjectURL(blob);a.href=u;a.download="西雅图死亡档案-阅读进度.json";a.click();setTimeout(()=>URL.revokeObjectURL(u),3000);toast("已导出阅读进度");});
 $("import-btn").addEventListener("click",()=>$("import-file").click());
 $("import-file").addEventListener("change",async e=>{const f=e.target.files&&e.target.files[0];if(!f)return;try{const data=JSON.parse(await f.text());if(data.app!=="seattle-death-file-reader"||typeof data.state!=="object")throw Error("格式无效");state={...DEFAULTS,...data.state,progress:typeof data.state.progress==="object"&&data.state.progress?data.state.progress:{},bookmarks:Array.isArray(data.state.bookmarks)?data.state.bookmarks:[]};state.chapter=clamp(state.chapter,1,chapters.length);persist();applyTheme();closeDrawer();renderShelf();toast("阅读进度已导入");}catch(e){toast("文件格式不正确");}e.target.value="";});
+async function downloadOfflineBook(){
+  const button=$("download-offline"),status=$("offline-status");
+  if(!("caches" in window)){status.textContent="当前浏览器不支持离线缓存";return;}
+  button.disabled=true;
+  try{
+    const cache=await caches.open("seattle-novel-v500");
+    let completed=0,failures=0;
+    for(let i=0;i<chapters.length;i+=8){
+      const batch=chapters.slice(i,i+8);
+      const results=await Promise.allSettled(batch.map(async ch=>{
+        const response=await fetch(ch.path,{cache:"no-cache"});
+        if(!response.ok)throw new Error("无法读取 "+ch.path);
+        await cache.put(ch.path,response);
+      }));
+      completed+=results.filter(x=>x.status==="fulfilled").length;
+      failures+=results.filter(x=>x.status!=="fulfilled").length;
+      status.textContent="离线缓存："+(i+batch.length)+"/"+chapters.length+" 章";
+      await new Promise(resolve=>setTimeout(resolve,0));
+    }
+    status.textContent=failures===0?"全部"+completed+"章已缓存，可离线阅读":"已缓存"+completed+"章，失败"+failures+"章；可重新尝试";
+    toast(failures===0?"全书离线缓存完成":"缓存部分完成，请重试");
+  }catch(e){console.error(e);status.textContent="下载中断，请检查网络后重试";toast("离线缓存失败");}
+  finally{button.disabled=false;}
+}
+$("download-offline").addEventListener("click",downloadOfflineBook);
 window.addEventListener("popstate",onNavigation);
 async function boot(){applyTheme();try{const r=await fetch("./chapters.json",{cache:"no-cache"});if(!r.ok)throw Error("chapters.json "+r.status);chapters=await r.json();if(!Array.isArray(chapters)||!chapters.length)throw Error("目录为空");renderShelf();await onNavigation();}catch(e){console.error(e);$("resume-title").textContent="目录加载失败";$("resume-sub").textContent="请检查网络并刷新页面";toast("无法加载章节目录");}if("serviceWorker" in navigator)navigator.serviceWorker.register("./service-worker.js").catch(()=>{});}
 boot();
