@@ -1,4 +1,4 @@
-const CACHE="seattle-novel-v2";
+const CACHE="seattle-novel-v3";
 const CORE=["./","./index.html","./styles.css","./app.js","./chapters.json","./manifest.webmanifest",
  ...Array.from({length:11},(_,i)=>"./chapters/"+String(i+1).padStart(2,"0")+".txt")];
 self.addEventListener("install",event=>{
