@@ -19,7 +19,21 @@ window.addEventListener("scroll",()=>{if(throttled)return;throttled=true;request
 window.addEventListener("pagehide",()=>savePosition(true));
 document.addEventListener("visibilitychange",()=>{if(document.visibilityState==="hidden")savePosition(true);});
 function closeDrawer(){$("overlay").classList.add("hidden");$("overlay").setAttribute("aria-hidden","true");document.body.style.overflow="";}
-function drawer(type){$("drawer-title").textContent=type==="toc"?"章节目录":"阅读设置";$("toc-panel").classList.toggle("hidden",type!=="toc");$("settings-panel").classList.toggle("hidden",type!=="settings");if(type==="toc")listChapters($("toc-chapters"));applyTheme();$("overlay").classList.remove("hidden");$("overlay").setAttribute("aria-hidden","false");document.body.style.overflow="hidden";}
+function drawer(type){$("drawer-title").textContent=type==="toc"?"章节目录":"阅读设置";$("toc-panel").classList.toggle("hidden",type!=="toc");$("settings-panel").classList.toggle("hidden",type!=="settings");if(type==="toc")listChapters($("toc-chapters"));if(type==="settings")renderBookmarks();applyTheme();$("overlay").classList.remove("hidden");$("overlay").setAttribute("aria-hidden","false");document.body.style.overflow="hidden";}
+function renderBookmarks(){
+  const root=$("bookmarks-list");root.replaceChildren();
+  const items=state.bookmarks.slice().sort((a,b)=>(b.at||0)-(a.at||0));
+  if(!items.length){const p=document.createElement("p");p.className="small";p.style.padding="12px";p.textContent="还没有书签。阅读章节时点击「加书签」。";root.appendChild(p);return;}
+  for(const b of items){
+    if(!chapters.some(ch=>ch.id===b.chapter))continue;
+    const btn=document.createElement("button");btn.className="chapter-item";btn.type="button";
+    const label=document.createElement("span");label.textContent=titleFor(b.chapter);
+    const tail=document.createElement("span");tail.className="chapter-tail";tail.textContent=Math.round((b.ratio||0)*100)+"% ›";
+    btn.append(label,tail);
+    btn.addEventListener("click",()=>{state.progress[b.chapter]={ratio:b.ratio||0,at:Date.now()};persist();openChapter(b.chapter,true,true);});
+    root.appendChild(btn);
+  }
+}
 function updateBookmarkButton(){const exists=state.bookmarks.some(b=>b.chapter===current);$("bookmark-btn").textContent=exists?"★ 已加书签":"☆ 加书签";}
 async function openChapter(id,recordHistory=true,restore=true){
 const ch=chapters.find(c=>c.id===id);if(!ch){toast("未找到章节");return;}
@@ -53,7 +67,7 @@ $("settings-btn").addEventListener("click",()=>drawer("settings"));
 $("close-drawer").addEventListener("click",closeDrawer);
 $("overlay").addEventListener("click",e=>{if(e.target.dataset.close)closeDrawer();});
 document.addEventListener("keydown",e=>{if(e.key==="Escape")closeDrawer();});
-$("bookmark-btn").addEventListener("click",()=>{const found=state.bookmarks.findIndex(b=>b.chapter===current);if(found>=0){state.bookmarks.splice(found,1);toast("已移除书签");}else{savePosition(true);state.bookmarks.push({chapter:current,ratio:scrollRatio(),at:Date.now()});toast("书签已保存");}persist();updateBookmarkButton();});
+$("bookmark-btn").addEventListener("click",()=>{const found=state.bookmarks.findIndex(b=>b.chapter===current);if(found>=0){state.bookmarks.splice(found,1);toast("已移除书签");}else{savePosition(true);state.bookmarks.push({chapter:current,ratio:scrollRatio(),at:Date.now()});toast("书签已保存");}persist();updateBookmarkButton();renderBookmarks();});
 document.querySelectorAll("[data-theme-option]").forEach(b=>b.addEventListener("click",()=>{state.theme=b.dataset.themeOption;persist();applyTheme();}));
 document.querySelectorAll("[data-leading]").forEach(b=>b.addEventListener("click",()=>{state.leading=Number(b.dataset.leading);persist();applyTheme();}));
 $("font-size").addEventListener("input",e=>{state.fontSize=clamp(e.target.value,16,27);persist();applyTheme();});
