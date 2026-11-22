@@ -1,6 +1,6 @@
 # 西雅图死亡档案 · 在线阅读器
 
-独立于仓库原游戏的原创中文小说阅读器。
+独立于仓库原游戏的原创中文小说阅读器，已收录第一卷50章。
 
 在线地址：https://alex1122341.github.io/Peak-Life-Game/novel/
 
@@ -14,7 +14,7 @@
 
 ## 更新章节
 1. 在 chapters/ 添加编号 TXT（如 12.txt）。
-2. 在 chapters.json 追加章节标题、编号及路径。
+2. 在 chapters.json 追加章节标题、编号及路径。当前收录第一卷1—50章。
 3. 更新 service-worker.js 的缓存版本和章节缓存清单。
 4. 提交到 main 后 GitHub Pages 自动发布。
 
