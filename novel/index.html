@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#151c27">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="description" content="《西雅图死亡档案》原创小说，沉浸式阅读，自动保存章节与断点。">
+  <link rel="manifest" href="./manifest.webmanifest">
+  <link rel="stylesheet" href="./styles.css">
+  <title>西雅图死亡档案 · 阅读器</title>
+</head>
+<body data-theme="paper">
+  <div class="reading-progress" id="reading-progress" aria-hidden="true"></div>
+  <div class="app">
+    <header class="topbar">
+      <button id="home-btn" class="brand" aria-label="返回书架"><span class="brand-mark">档</span><span>纸间 · 阅读</span></button>
+      <div class="top-actions">
+        <button id="toc-btn" class="icon-btn" aria-label="打开目录" title="目录">☷</button>
+        <button id="settings-btn" class="icon-btn" aria-label="阅读设置" title="设置">Aa</button>
+      </div>
+    </header>
+
+    <main id="shelf" class="shelf">
+      <p class="eyebrow">ORIGINAL FICTION · 原创小说</p>
+      <section class="hero">
+        <div class="cover" role="img" aria-label="西雅图死亡档案书籍封面">
+          <div class="cover-lines"></div>
+          <div class="cover-tag">THE DEAD KEEP SECRETS</div>
+          <div class="cover-main"><div>西雅图</div><div>死亡档案</div></div>
+          <div class="cover-sub">一份深夜兼职，打开另一种人生</div>
+          <div class="cover-bottom">SEATTLE · 044</div>
+        </div>
+        <div class="hero-copy">
+          <h1>西雅图死亡档案</h1>
+          <div class="meta"><span>都市异能</span><span>北美悬疑</span><span>系统升级</span></div>
+          <p class="description">在西雅图求学的周晏，为支付房租接下殡仪馆兼职。接触遗体便能继承技能的系统，让他逐渐卷入一条横跨黑帮、身份交易与神秘组织的暗线。</p>
+          <div class="mini-stat"><span id="count-label">11 章</span><span>持续更新</span><span>自动保存进度</span></div>
+        </div>
+      </section>
+      <section class="continue-card">
+        <div>
+          <p class="label">接着读</p>
+          <h2 id="resume-title">第一章：在美国，死人比活人值钱</h2>
+          <p class="small" id="resume-sub">当前进度会自动记录在这台设备上</p>
+        </div>
+        <button id="resume-btn" class="primary">继续阅读 <span aria-hidden="true">→</span></button>
+      </section>
+      <div class="section-heading"><h2>章节目录</h2><span id="chapter-total">共 11 章</span></div>
+      <div id="shelf-chapters" class="chapter-list"></div>
+      <p class="disclaimer">本网站免费、无广告。阅读进度保存于当前浏览器；更换设备或清除浏览器数据前可在设置中导出备份。</p>
+    </main>
+
+    <main id="reader" class="reader hidden">
+      <div class="reader-heading">
+        <div class="reader-kicker">西雅图死亡档案 <span id="reader-count"></span></div>
+        <h1 id="chapter-title"></h1>
+        <div class="chapter-info"><span>原创小说</span><span>沉浸式阅读</span><button id="bookmark-btn" class="text-action" aria-label="添加书签">☆ 加书签</button></div>
+      </div>
+      <article id="chapter-body" class="chapter-body" aria-label="小说正文"></article>
+      <footer class="chapter-footer">
+        <p id="end-note">— 本章完 —</p>
+        <div class="chapter-nav"><button id="prev-btn">← 上一章</button><button id="next-btn" class="primary">下一章 →</button></div>
+      </footer>
+    </main>
+    <div id="toast" class="toast hidden" role="status" aria-live="polite"></div>
+  </div>
+
+  <div id="overlay" class="overlay hidden" aria-hidden="true">
+    <div class="veil" data-close="true"></div>
+    <aside class="drawer" role="dialog" aria-modal="true" aria-labelledby="drawer-title">
+      <div class="drawer-head"><h2 id="drawer-title">章节目录</h2><button id="close-drawer" class="icon-btn" aria-label="关闭">×</button></div>
+      <div id="toc-panel"><div id="toc-chapters" class="chapter-list"></div></div>
+      <div id="settings-panel" class="hidden">
+        <div class="setting-group"><h3>阅读主题</h3><div class="theme-row">
+          <button data-theme-option="paper" class="theme-choice">纸白</button>
+          <button data-theme-option="sepia" class="theme-choice">米黄</button>
+          <button data-theme-option="night" class="theme-choice">夜间</button>
+        </div></div>
+        <div class="setting-group"><h3>字号 <span id="font-size-label">19px</span></h3><input id="font-size" type="range" min="16" max="27" step="1" value="19" aria-label="文字大小"></div>
+        <div class="setting-group"><h3>行距</h3><div class="theme-row"><button data-leading="1.75">紧凑</button><button data-leading="1.95">标准</button><button data-leading="2.2">宽松</button></div></div>
+        <div class="setting-group"><h3>阅读备份</h3><p class="small">进度默认只储存在本机 Safari。导出后可在其他设备导入。</p><div class="theme-row"><button id="export-btn">导出进度</button><button id="import-btn">导入进度</button><input type="file" id="import-file" accept=".json,application/json" class="hidden"></div></div>
+        <p class="small muted">打开网页后即使退出，下一次也可以从上次阅读的位置继续。跨设备不会自动同步。</p>
+      </div>
+    </aside>
+  </div>
+  <script defer src="./app.js"></script>
+</body>
+</html>
