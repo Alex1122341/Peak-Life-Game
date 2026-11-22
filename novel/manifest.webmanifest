@@ -1,0 +1,11 @@
+{
+  "name": "西雅图死亡档案 · 阅读器",
+  "short_name": "死亡档案",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#f6f5f1",
+  "theme_color": "#151c27",
+  "lang": "zh-CN",
+  "description": "离线阅读、自动保存断点的原创中文小说阅读器"
+}
