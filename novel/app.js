@@ -30,12 +30,12 @@ function renderBookmarks(){
     const label=document.createElement("span");label.textContent=titleFor(b.chapter);
     const tail=document.createElement("span");tail.className="chapter-tail";tail.textContent=Math.round((b.ratio||0)*100)+"% ›";
     btn.append(label,tail);
-    btn.addEventListener("click",()=>{state.progress[b.chapter]={ratio:b.ratio||0,at:Date.now()};persist();openChapter(b.chapter,true,true);});
+    btn.addEventListener("click",()=>{openChapter(b.chapter,true,true,b.ratio||0);});
     root.appendChild(btn);
   }
 }
 function updateBookmarkButton(){const exists=state.bookmarks.some(b=>b.chapter===current);$("bookmark-btn").textContent=exists?"★ 已加书签":"☆ 加书签";}
-async function openChapter(id,recordHistory=true,restore=true){
+async function openChapter(id,recordHistory=true,restore=true,bookmarkRatio=null){
 const ch=chapters.find(c=>c.id===id);if(!ch){toast("未找到章节");return;}
 if(page==="reader"&&!opening)savePosition(true);
 closeDrawer();opening=true;$("shelf").classList.add("hidden");$("reader").classList.remove("hidden");page="reader";current=id;
@@ -51,7 +51,7 @@ const frag=document.createDocumentFragment();
 for(const para of parseText(body)){const p=document.createElement("p");p.textContent=para;if(para.startsWith("【")||para==="……"||para.startsWith("（本章完")||para.startsWith("（第"))p.classList.add("no-indent");frag.appendChild(p);}
 $("chapter-body").replaceChildren(frag);state.chapter=id;persist();
 await new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve)));
-const saved=state.progress[id]||{},ratio=restore?clamp(saved.ratio||0,0,1):0;
+const saved=state.progress[id]||{},ratio=bookmarkRatio!==null?clamp(bookmarkRatio,0,1):(restore?clamp(saved.ratio||0,0,1):0);
 const max=Math.max(0,document.documentElement.scrollHeight-window.innerHeight);
 window.scrollTo({top:max*ratio,behavior:"instant"});$("reading-progress").style.width=(ratio*100).toFixed(1)+"%";listChapters($("shelf-chapters"));
 }catch(e){const p=document.createElement("p");p.textContent="章节加载失败，请检查网络或稍后重试。";const retry=document.createElement("button");retry.className="primary";retry.textContent="重新加载";retry.addEventListener("click",()=>openChapter(id,false,restore));$("chapter-body").replaceChildren(p,retry);console.error(e);}finally{opening=false;}
