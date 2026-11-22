@@ -1,0 +1,57 @@
+[
+  {
+    "id": 1,
+    "title": "在美国，死人比活人值钱",
+    "path": "chapters/01.txt"
+  },
+  {
+    "id": 2,
+    "title": "死人的技能，比大学文凭有用",
+    "path": "chapters/02.txt"
+  },
+  {
+    "id": 3,
+    "title": "一具不该死亡的尸体",
+    "path": "chapters/03.txt"
+  },
+  {
+    "id": 4,
+    "title": "美国警察，也不是万能的",
+    "path": "chapters/04.txt"
+  },
+  {
+    "id": 5,
+    "title": "码头上的秘密",
+    "path": "chapters/05.txt"
+  },
+  {
+    "id": 6,
+    "title": "第一次真正意义上的升级",
+    "path": "chapters/06.txt"
+  },
+  {
+    "id": 7,
+    "title": "墨西哥毒贩的遗产",
+    "path": "chapters/07.txt"
+  },
+  {
+    "id": 8,
+    "title": "死人最后三分钟",
+    "path": "chapters/08.txt"
+  },
+  {
+    "id": 9,
+    "title": "有人提前安排了我的工作",
+    "path": "chapters/09.txt"
+  },
+  {
+    "id": 10,
+    "title": "第四十三具尸体",
+    "path": "chapters/10.txt"
+  },
+  {
+    "id": 11,
+    "title": "不该出现的尸体",
+    "path": "chapters/11.txt"
+  }
+]
