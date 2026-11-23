@@ -24,7 +24,29 @@ if(kind==="seattle"){const a=document.createElement("a");a.className="primary";a
 else if(book.count){const p=readProgress(book.id),btn=document.createElement("button");btn.type="button";btn.className="primary";btn.textContent=`继续读 · ${Math.min(book.count,p.chapter)}/${book.count}`;btn.addEventListener("click",()=>openReader(book,p.chapter));tools.append(btn);const start=document.createElement("button");start.textContent="目录";start.addEventListener("click",()=>openReader(book,p.chapter,true));tools.append(start);const del=document.createElement("button");del.textContent="移除本机副本";del.className="danger";del.addEventListener("click",async()=>{if(!confirm(`仅从当前设备移除《${book.title}》的正文与阅读位置？不会删除原始文件。`))return;await removeBook(book.id);localStorage.removeItem(progressKey(book.id));await renderShelf();toast("已移除本机书籍");});tools.append(del);}
 else{const btn=document.createElement("button");btn.className="primary";btn.textContent="导入原文";btn.addEventListener("click",pickFile);tools.append(btn);}
 el.append(head,desc,tools);return el;}
-async function renderShelf(){const grid=$("book-grid");grid.replaceChildren();const books=await getBooks();const gu=books.find(b=>b.id==="gu-zhen-ren");const seattle={title:"西雅图死亡档案",author:"原创小说"};grid.appendChild(card(seattle,"seattle"),card(gu||{title:"蛊真人",author:"蛊真人",id:"gu-zhen-ren"},"gu"));for(const b of books.filter(x=>x.id!=="gu-zhen-ren").sort((a,b)=>b.updatedAt-a.updatedAt))grid.appendChild(card(b,"local"));const add=document.createElement("article");add.className="book add-book";const btn=document.createElement("button");btn.textContent="＋ 添加下一本";btn.addEventListener("click",pickFile);const p=document.createElement("p");p.textContent="不限书籍数量 · 支持 EPUB / TXT\n每本独立保存断点与书签";add.append(btn,p);grid.append(add);$("book-count").textContent=`${books.length+1} 本可读 · 继续添加不需要改网页代码`;}
+
+async function renderShelf(){
+ const grid=$("book-grid"),seattle={title:"西雅图死亡档案",author:"原创小说"};
+ // Fixed titles must remain visible while the local database is being read or if Safari blocks it.
+ grid.replaceChildren(card(seattle,"seattle"),card({title:"蛊真人",author:"蛊真人",id:"gu-zhen-ren"},"gu"));
+ let books=[],dbError=null;
+ try{
+   books=await getBooks();
+   // Metadata only, used to show imported titles on the site's game homepage.
+   try{localStorage.setItem("paper-books-index-v1",JSON.stringify(books.map(b=>({id:b.id,title:b.title,count:b.count,updatedAt:b.updatedAt}))))}catch(e){console.warn("书架首页索引未保存",e);}
+ }catch(e){
+   dbError=e;console.error("本机书库读取失败",e);
+   status("书架入口已显示，但当前浏览器无法读取本机小说：" +(e?.message||"请检查 Safari 网站数据设置"));
+ }
+ const gu=books.find(b=>b.id==="gu-zhen-ren");
+ grid.replaceChildren(card(seattle,"seattle"),card(gu||{title:"蛊真人",author:"蛊真人",id:"gu-zhen-ren"},"gu"));
+ for(const b of books.filter(x=>x.id!=="gu-zhen-ren").sort((a,b)=>b.updatedAt-a.updatedAt))grid.appendChild(card(b,"local"));
+ const add=document.createElement("article");add.className="book add-book";
+ const btn=document.createElement("button");btn.textContent="＋ 添加下一本";btn.addEventListener("click",pickFile);
+ const p=document.createElement("p");p.textContent="不限书籍数量 · 支持 EPUB / TXT\n每本独立保存断点与书签";
+ add.append(btn,p);grid.append(add);
+ $("book-count").textContent=dbError?"已显示书籍入口 · 本机存储不可用":(books.length+1)+" 本可读 · 可继续添加";
+}
 function pickFile(){$("file-picker").click();}
 function parseXML(s,type="application/xml"){return new DOMParser().parseFromString(s,type);}
 function xmlText(doc,name){return doc.getElementsByTagNameNS("*",name)[0]?.textContent?.trim()||doc.getElementsByTagName(name)[0]?.textContent?.trim()||"";}
@@ -84,3 +106,4 @@ function backShelf(){if(ui.reading)recordPosition();ui.reading=false;ui.book=nul
 let throttled=false;window.addEventListener("scroll",()=>{if(throttled)return;throttled=true;requestAnimationFrame(()=>{throttled=false;recordPosition();});},{passive:true});window.addEventListener("pagehide",recordPosition);document.addEventListener("visibilitychange",()=>{if(document.visibilityState==="hidden")recordPosition();});
 $("import-top").addEventListener("click",pickFile);$("import-hero").addEventListener("click",pickFile);$("file-picker").addEventListener("change",async e=>{const f=e.target.files?.[0];e.target.value="";if(!f)return;try{await importFile(f);}catch(err){console.error(err);status("导入失败："+err.message);toast("导入失败，请检查格式或可用存储空间");}});$("back-shelf").addEventListener("click",backShelf);$("prev-chapter").addEventListener("click",()=>{recordPosition();openChapter(ui.chapter-1);});$("next-chapter").addEventListener("click",()=>{recordPosition();openChapter(ui.chapter+1);});$("toc-toggle").addEventListener("click",()=>toggleToc());$("toc-volume").addEventListener("change",renderToc);$("toc-search").addEventListener("input",renderToc);$("bookmark-toggle").addEventListener("click",()=>{if(!ui.book)return;const p=currentProgress();const i=p.bookmarks.indexOf(ui.chapter);if(i>=0)p.bookmarks.splice(i,1);else p.bookmarks.push(ui.chapter);writeProgress(ui.book.id,p);updateBookmark();toast(i>=0?"书签已移除":"书签已保存");});$("theme-toggle").addEventListener("click",()=>setTheme(theme()==="night"?"paper":"night"));const fsize=()=>clamp(localStorage.getItem("paper-books-font")||20,16,29);function font(v){const size=clamp(fsize()+v,16,29);document.documentElement.style.setProperty("--font-size",size+"px");localStorage.setItem("paper-books-font",size);}$("font-down").addEventListener("click",()=>font(-1));$("font-up").addEventListener("click",()=>font(1));
 setTheme(theme());document.documentElement.style.setProperty("--font-size",fsize()+"px");renderShelf().catch(err=>{console.error(err);status("无法打开本机书库："+err.message);});if("serviceWorker" in navigator)navigator.serviceWorker.register("./sw.js").catch(()=>{});
+window.addEventListener("pageshow",()=>{if(!ui.reading)renderShelf().catch(console.error);});
