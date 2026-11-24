@@ -2,7 +2,7 @@
   "title": "蛊真人 · 非官方同人续篇",
   "author": "个人同人创作（非原作者）",
   "description": "承接用户私人 EPUB 的第六卷第368节；本项目为非官方续篇，原著小说并未完结。",
-  "publishedCount": 34,
+  "publishedCount": 74,
   "plannedCount": 700,
   "formalVolumes": [
     {
@@ -23,6 +23,30 @@
       "volume": 6,
       "start": 369,
       "end": 402
+    },
+    {
+      "path": "vol6_403_412.txt",
+      "volume": 6,
+      "start": 403,
+      "end": 412
+    },
+    {
+      "path": "vol6_413_422.txt",
+      "volume": 6,
+      "start": 413,
+      "end": 422
+    },
+    {
+      "path": "vol6_423_432.txt",
+      "volume": 6,
+      "start": 423,
+      "end": 432
+    },
+    {
+      "path": "vol6_433_442.txt",
+      "volume": 6,
+      "start": 433,
+      "end": 442
     }
   ],
   "chapters": [
@@ -263,6 +287,286 @@
       "number": 402,
       "title": "未付完的账",
       "batch": 0
+    },
+    {
+      "id": "6-403",
+      "volume": 6,
+      "number": 403,
+      "title": "第三种回声",
+      "batch": 1
+    },
+    {
+      "id": "6-404",
+      "volume": 6,
+      "number": 404,
+      "title": "损运之地",
+      "batch": 1
+    },
+    {
+      "id": "6-405",
+      "volume": 6,
+      "number": 405,
+      "title": "修补者",
+      "batch": 1
+    },
+    {
+      "id": "6-406",
+      "volume": 6,
+      "number": 406,
+      "title": "一扇门的价格",
+      "batch": 1
+    },
+    {
+      "id": "6-407",
+      "volume": 6,
+      "number": 407,
+      "title": "看不见的壳",
+      "batch": 1
+    },
+    {
+      "id": "6-408",
+      "volume": 6,
+      "number": 408,
+      "title": "断阵之法",
+      "batch": 1
+    },
+    {
+      "id": "6-409",
+      "volume": 6,
+      "number": 409,
+      "title": "黑火照天",
+      "batch": 1
+    },
+    {
+      "id": "6-410",
+      "volume": 6,
+      "number": 410,
+      "title": "星海逆卷",
+      "batch": 1
+    },
+    {
+      "id": "6-411",
+      "volume": 6,
+      "number": 411,
+      "title": "借来的一击",
+      "batch": 1
+    },
+    {
+      "id": "6-412",
+      "volume": 6,
+      "number": 412,
+      "title": "两头都要付账",
+      "batch": 1
+    },
+    {
+      "id": "6-413",
+      "volume": 6,
+      "number": 413,
+      "title": "一峰换一息",
+      "batch": 2
+    },
+    {
+      "id": "6-414",
+      "volume": 6,
+      "number": 414,
+      "title": "火里的归途",
+      "batch": 2
+    },
+    {
+      "id": "6-415",
+      "volume": 6,
+      "number": 415,
+      "title": "两声哭啼",
+      "batch": 2
+    },
+    {
+      "id": "6-416",
+      "volume": 6,
+      "number": 416,
+      "title": "空手之获",
+      "batch": 2
+    },
+    {
+      "id": "6-417",
+      "volume": 6,
+      "number": 417,
+      "title": "火种有主",
+      "batch": 2
+    },
+    {
+      "id": "6-418",
+      "volume": 6,
+      "number": 418,
+      "title": "魔影向北",
+      "batch": 2
+    },
+    {
+      "id": "6-419",
+      "volume": 6,
+      "number": 419,
+      "title": "开价",
+      "batch": 2
+    },
+    {
+      "id": "6-420",
+      "volume": 6,
+      "number": 420,
+      "title": "黄沙之市",
+      "batch": 2
+    },
+    {
+      "id": "6-421",
+      "volume": 6,
+      "number": 421,
+      "title": "楚门的路",
+      "batch": 2
+    },
+    {
+      "id": "6-422",
+      "volume": 6,
+      "number": 422,
+      "title": "北原没有星雾",
+      "batch": 2
+    },
+    {
+      "id": "6-423",
+      "volume": 6,
+      "number": 423,
+      "title": "价外之价",
+      "batch": 3
+    },
+    {
+      "id": "6-424",
+      "volume": 6,
+      "number": 424,
+      "title": "没有借出的底牌",
+      "batch": 3
+    },
+    {
+      "id": "6-425",
+      "volume": 6,
+      "number": 425,
+      "title": "旧印",
+      "batch": 3
+    },
+    {
+      "id": "6-426",
+      "volume": 6,
+      "number": 426,
+      "title": "酒宴未开",
+      "batch": 3
+    },
+    {
+      "id": "6-427",
+      "volume": 6,
+      "number": 427,
+      "title": "回去的人",
+      "batch": 3
+    },
+    {
+      "id": "6-428",
+      "volume": 6,
+      "number": 428,
+      "title": "期满",
+      "batch": 3
+    },
+    {
+      "id": "6-429",
+      "volume": 6,
+      "number": 429,
+      "title": "不归的船",
+      "batch": 3
+    },
+    {
+      "id": "6-430",
+      "volume": 6,
+      "number": 430,
+      "title": "梦醒之后",
+      "batch": 3
+    },
+    {
+      "id": "6-431",
+      "volume": 6,
+      "number": 431,
+      "title": "一座空殿",
+      "batch": 3
+    },
+    {
+      "id": "6-432",
+      "volume": 6,
+      "number": 432,
+      "title": "一个名字的去处",
+      "batch": 3
+    },
+    {
+      "id": "6-433",
+      "volume": 6,
+      "number": 433,
+      "title": "父亲之外",
+      "batch": 4
+    },
+    {
+      "id": "6-434",
+      "volume": 6,
+      "number": 434,
+      "title": "诛魔榜上的墨痕",
+      "batch": 4
+    },
+    {
+      "id": "6-435",
+      "volume": 6,
+      "number": 435,
+      "title": "商家的账本",
+      "batch": 4
+    },
+    {
+      "id": "6-436",
+      "volume": 6,
+      "number": 436,
+      "title": "另一条归路",
+      "batch": 4
+    },
+    {
+      "id": "6-437",
+      "volume": 6,
+      "number": 437,
+      "title": "借来的梦",
+      "batch": 4
+    },
+    {
+      "id": "6-438",
+      "volume": 6,
+      "number": 438,
+      "title": "归名簿上的新字",
+      "batch": 4
+    },
+    {
+      "id": "6-439",
+      "volume": 6,
+      "number": 439,
+      "title": "三枚气果",
+      "batch": 4
+    },
+    {
+      "id": "6-440",
+      "volume": 6,
+      "number": 440,
+      "title": "买一条假路",
+      "batch": 4
+    },
+    {
+      "id": "6-441",
+      "volume": 6,
+      "number": 441,
+      "title": "不能同时熄灭的灯",
+      "batch": 4
+    },
+    {
+      "id": "6-442",
+      "volume": 6,
+      "number": 442,
+      "title": "借一盏灯看路",
+      "batch": 4
     }
   ]
 }
