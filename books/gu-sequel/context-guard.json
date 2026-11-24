@@ -1,0 +1,28 @@
+{
+  "work_id": "gu-sequel",
+  "manifest": "manifest.json",
+  "manifest_title": "蛊真人 · 非官方同人续篇",
+  "opening_batch": "vol6_369_402.txt",
+  "opening_prefix": "《蛊真人》非官方同人续篇",
+  "batch_pattern": "vol[0-9]+_[0-9]+_[0-9]+\\.txt",
+  "min_han": 4286,
+  "blocked_terms": [
+    "孤独摇滚",
+    "Bocchi the Rock",
+    "后藤一里",
+    "後藤ひとり",
+    "伊地知虹夏",
+    "山田凉",
+    "山田リョウ",
+    "喜多郁代",
+    "结束乐队",
+    "結束バンド",
+    "西雅图死亡档案",
+    "ChatGPT",
+    "我是一个AI",
+    "作为AI语言模型",
+    "待补正文",
+    "TODO",
+    "placeholder"
+  ]
+}

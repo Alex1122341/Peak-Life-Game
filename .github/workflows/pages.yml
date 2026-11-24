@@ -23,6 +23,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+      - name: Verify novel context before publishing
+        run: python3 tools/check_novel.py --root books/gu-sequel --profile books/gu-sequel/context-guard.json --work gu-sequel
       - name: Setup Pages
         uses: actions/configure-pages@v5
       - name: Upload artifact

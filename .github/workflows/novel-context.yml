@@ -1,0 +1,26 @@
+name: Verify novel context
+on:
+  pull_request:
+    paths:
+      - 'books/gu-sequel/**'
+      - 'tools/check_novel.py'
+      - '.github/workflows/novel-context.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  novel-context:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Validate work, chapter identity, rewrite flags and foreign terms
+        env:
+          BASE_SHA: ${{ github.event.pull_request.base.sha }}
+        run: |
+          if [ -n "$BASE_SHA" ]; then
+            python3 tools/check_novel.py --root books/gu-sequel --profile books/gu-sequel/context-guard.json --work gu-sequel --base-ref "$BASE_SHA"
+          else
+            python3 tools/check_novel.py --root books/gu-sequel --profile books/gu-sequel/context-guard.json --work gu-sequel
+          fi
