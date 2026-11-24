@@ -45,10 +45,19 @@ function fanContinuationCard(){
  name.textContent="蛊真人 · 非官方续篇";author.textContent="第六卷第369—468节 · 100章 · 本卷完结";tag.className="tag";tag.textContent="同人创作 · 在线";
  meta.append(name,author,tag);head.append(cover,meta);
  const desc=document.createElement("p");desc.className="book-desc";
- desc.textContent="最新续写已上线。与原著单独阅读，支持目录、章节书签和浏览器本机阅读断点。";
+ desc.textContent="第370—378节已重写（9节）。第369节此前已更新；原有章节、书签和断点保留。";
  const tools=document.createElement("div");tools.className="book-tools";
  const link=document.createElement("a");link.className="primary";link.href="./gu-sequel/";link.textContent="在线阅读续篇";
- tools.append(link);el.append(head,desc,tools);return el;
+ const latest=document.createElement("a");latest.href="./gu-sequel/#v6-378";latest.textContent="最新重写 · 第378节";tools.append(link,latest);el.append(head,desc,tools);
+ // Read actual online manifest so every future release automatically updates the shelf.
+ fetch("./gu-sequel/manifest.json",{cache:"no-store"}).then(r=>{if(!r.ok)throw Error("HTTP "+r.status);return r.json();}).then(m=>{
+   if(!Array.isArray(m.chapters)||!m.chapters.length||!Number.isInteger(m.publishedCount))return;
+   const first=m.chapters[0],last=m.chapters.at(-1),rewritten=m.chapters.filter(c=>c.rewriteVersion>0);
+   author.textContent="第"+first.volume+"卷第"+first.number+"节至第"+last.volume+"卷第"+last.number+"节 · "+m.publishedCount+"章";
+   if(rewritten.length){const latestChapter=rewritten.at(-1);desc.textContent="已重写 "+rewritten.length+" 节 · 最新第"+latestChapter.volume+"卷第"+latestChapter.number+"节。原有章节、书签和断点保留。";latest.href="./gu-sequel/#v"+latestChapter.volume+"-"+latestChapter.number;latest.textContent="最新重写 · 第"+latestChapter.number+"节";}
+   else{desc.textContent="在线续篇，共 "+m.publishedCount+" 章。支持章节书签及阅读断点。";latest.hidden=true;}
+ }).catch(e=>console.warn("无法更新续篇书架状态",e));
+ return el;
 }
 
 async function renderShelf(){
