@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="zh-CN"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#f3efe7">
+<meta name="description" content="蛊真人原著六卷在线章节阅读，支持目录、跳章、阅读断点和书签。">
+<title>蛊真人 · 原著阅读｜纸间</title>
+<link rel="stylesheet" href="../gu-sequel/reader.css?v=2">
+<link rel="stylesheet" href="reader.css?v=1">
+</head><body data-theme="paper">
+<div id="reading-progress" aria-hidden="true"></div>
+<header class="topbar"><a class="brand" href="../">‹ 我的书架</a><div class="top-actions"><button id="home-button" type="button">书籍</button><button id="toc-button" type="button">目录</button><button id="jump-button" type="button">跳章</button><button id="theme-button" type="button">夜间</button></div></header>
+<main class="layout">
+<section id="home-view" class="home">
+<p class="eyebrow">REVEREND INSANITY · 原著</p>
+<div class="hero"><div class="cover"><span>蛊 真人</span><small>魔性不改 · 魔尊永生</small></div><div class="info">
+<h1>蛊真人</h1><p>作者：蛊真人 · 原著六卷</p>
+<p id="library-state" class="muted" aria-live="polite">正在加载在线目录…</p>
+<button id="continue-button" type="button" class="primary" disabled>继续阅读</button>
+<p id="resume-label" class="muted"></p>
+</div></div>
+<p class="notice">原著未完结。保留源文件卷内节号及原始标题，部分章节缺文或编号重复；非官方同人续篇单独标识。</p>
+<div class="section-controls"><h2>章节目录</h2><label>分卷 <select id="home-volume"></select></label><label>搜索 <input id="home-search" type="search" placeholder="节号或标题"></label></div>
+<div id="home-chapters" class="chapter-list"></div>
+<p class="notice"><a href="../gu-sequel/">阅读非官方续篇（第六卷第369节起） →</a></p>
+</section>
+<section id="reader-view" class="reader hidden">
+<p id="reader-book" class="eyebrow"></p><h1 id="chapter-title">加载中</h1>
+<div class="reader-meta"><span id="reader-position"></span><button id="bookmark-button" type="button">☆ 加书签</button><label class="font-label">字号 <input id="font-range" type="range" min="16" max="28" value="20"></label></div>
+<p id="missing-note" class="notice hidden" role="status"></p>
+<article id="chapter-body" class="chapter-body"></article>
+<footer class="chapter-footer"><button id="previous-button" type="button">← 上一节</button><button id="next-button" type="button" class="primary">下一节 →</button></footer>
+<p class="notice">书签与阅读断点仅保存在当前浏览器。原著与非官方续篇分别显示。</p>
+</section></main>
+<div id="drawer-wrap" class="drawer-wrap hidden" aria-hidden="true"><div class="scrim" id="drawer-scrim"></div>
+<aside class="drawer" role="dialog" aria-modal="true" aria-label="章节目录"><header><h2>章节目录 / 跳转</h2><button id="close-drawer" type="button" aria-label="关闭目录">×</button></header>
+<p class="muted" id="drawer-count"></p>
+<label class="field-label">分卷 <select id="drawer-volume"></select></label>
+<input id="chapter-search" type="search" placeholder="按标题、节号搜索" aria-label="搜索章节">
+<div class="jump-row"><label>跳转方式<select id="jump-mode"><option value="volume">本卷原始节号</option><option value="sequence">全书章节序号</option></select></label><label>章节号<input type="number" inputmode="numeric" id="jump-number" min="1" placeholder="例如 368"></label><button id="jump-go" class="primary" type="button">跳转章节</button></div>
+<p id="jump-hint" class="muted"></p><div id="drawer-list" class="chapter-list"></div>
+<h3>我的书签</h3><div id="bookmark-list" class="chapter-list"></div></aside></div>
+<div id="toast" class="toast hidden" role="status" aria-live="polite"></div><script defer src="reader.js?v=1"></script>
+</body></html>
