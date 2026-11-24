@@ -6,13 +6,13 @@
  <meta name="theme-color" content="#f3efe7">
  <meta name="description" content="《蛊真人》非官方同人续篇：第六卷369节起，独立书签与章节阅读进度。">
  <title>蛊真人 · 非官方续篇｜纸间阅读</title>
- <link rel="stylesheet" href="reader.css?v=1">
+ <link rel="stylesheet" href="reader.css?v=2">
 </head>
 <body data-theme="paper">
  <div id="reading-progress" aria-hidden="true"></div>
  <header class="topbar">
   <a class="brand" href="../">‹ 我的书架</a>
-  <div class="top-actions"><button id="toc-button" type="button">目录</button><button id="theme-button" type="button">夜间</button></div>
+  <div class="top-actions"><button id="toc-button" type="button">目录</button><button id="jump-button" type="button">跳章</button><button id="theme-button" type="button">夜间</button></div>
  </header>
  <main class="layout">
   <section id="home-view" class="home">
@@ -44,12 +44,12 @@
   <aside class="drawer" role="dialog" aria-label="同人续篇章节目录">
    <header><h2>章节目录</h2><button type="button" id="close-drawer">×</button></header>
    <p id="drawer-count" class="muted"></p>
-   <input id="chapter-search" type="search" placeholder="搜索章号或标题" aria-label="搜索章节">
+   <input id="chapter-search" type="search" placeholder="搜索章号或标题" aria-label="搜索章节"><div class="jump-row"><label>选择卷 <select id="jump-volume" aria-label="选择卷"></select></label><label>输入节号 <input id="jump-number" type="number" min="1" inputmode="numeric" placeholder="例如 369"></label><button id="jump-go" type="button" class="primary">跳转</button></div>
    <div id="drawer-list" class="chapter-list"></div>
    <h3>我的书签</h3><div id="bookmark-list" class="chapter-list"></div>
   </aside>
  </div>
  <div id="toast" role="status" aria-live="polite" class="toast hidden"></div>
- <script defer src="reader.js?v=1"></script>
+ <script defer src="reader.js?v=2"></script>
 </body>
 </html>
