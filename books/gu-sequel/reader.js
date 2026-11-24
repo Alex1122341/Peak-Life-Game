@@ -19,7 +19,7 @@ function isBookmarked(id){return state.bookmarks.includes(id);}
 function buildList(root,items){const frag=document.createDocumentFragment();for(const c of items){const b=document.createElement("button");b.type="button";b.textContent=label(c);b.className=current?.id===c.id?"active":"";b.addEventListener("click",()=>openChapter(c.id));frag.appendChild(b);}root.replaceChildren(frag);}
 function renderBookmarks(){buildList($("bookmark-list"),state.bookmarks.map(id=>chapterById.get(id)).filter(Boolean));}
 function renderLists(){buildList($("home-chapters"),manifest.chapters);filterToc();renderBookmarks();$("drawer-count").textContent=`${manifest.publishedCount} 章已发布 · 规划续写 ${manifest.plannedCount} 章`;
- const first=manifest.chapters[0],last=manifest.chapters.at(-1);$("library-state").textContent=`已发布 ${manifest.publishedCount} 章 · 第${first.volume}卷第${first.number}节至第${last.volume}卷第${last.number}节 · ${manifest.publishedCount}/${manifest.plannedCount} 章${last.volume===6&&last.number===468?" · 第六卷续写完结，终卷尚未发布":""}`;
+ const first=manifest.chapters[0],last=manifest.chapters.at(-1),rewritten=manifest.chapters.filter(c=>c.rewriteVersion>0);$("library-state").textContent=`已发布 ${manifest.publishedCount} 章 · 第${first.volume}卷第${first.number}节至第${last.volume}卷第${last.number}节 · ${manifest.publishedCount}/${manifest.plannedCount} 章${last.volume===6&&last.number===468?" · 第六卷续写完结，终卷尚未发布":""}${rewritten.length?` · 已重写 ${rewritten.length} 节，最新第${rewritten.at(-1).number}节`:""}`;
  $("continue-button").disabled=false;
 }
 
@@ -38,7 +38,7 @@ function fillJumpVolumes(){
  }
 }
 function filterToc(){const q=$("chapter-search").value.trim().toLowerCase();const items=manifest.chapters.filter(c=>label(c).toLowerCase().includes(q));buildList($("drawer-list"),items);}
-async function readBatch(i){if(batchCache.has(i))return batchCache.get(i);const batch=manifest.batches[i];if(!batch)throw Error("未找到章节文件");const res=await fetch(batch.path,{cache:"no-cache"});if(!res.ok)throw Error(`HTTP ${res.status}`);const content=await res.text();const markers=[...content.matchAll(/^第(\d+)节[:：]([^\r\n]*)$/gm)],pages=new Map();
+async function readBatch(i){if(batchCache.has(i))return batchCache.get(i);const batch=manifest.batches[i];if(!batch)throw Error("未找到章节文件");const res=await fetch(batch.path,{cache:"no-store"});if(!res.ok)throw Error(`HTTP ${res.status}`);const content=await res.text();const markers=[...content.matchAll(/^第(\d+)节[:：]([^\r\n]*)$/gm)],pages=new Map();
  for(let j=0;j<markers.length;j++){const m=markers[j],to=markers[j+1]?markers[j+1].index:content.length;const body=content.slice(m.index+m[0].length,to).trim();pages.set(`${batch.volume}-${Number(m[1])}`,body);}batchCache.set(i,pages);return pages;}
 function showReader(){ $("home-view").classList.add("hidden");$("reader-view").classList.remove("hidden");}
 function closeDrawer(){ $("drawer-wrap").classList.add("hidden");$("drawer-wrap").setAttribute("aria-hidden","true");document.body.style.overflow="";}
@@ -61,5 +61,5 @@ $("bookmark-button").addEventListener("click",()=>{if(!current)return;const i=st
 $("theme-button").addEventListener("click",()=>{state.theme=state.theme==="night"?"paper":"night";theme();save();});
 $("font-range").addEventListener("input",e=>{state.font=Number(e.target.value)||20;theme();save();});
 document.addEventListener("keydown",e=>{if(e.key==="Escape")closeDrawer();});
-async function boot(){theme();try{const res=await fetch("manifest.json",{cache:"no-cache"});if(!res.ok)throw Error(`HTTP ${res.status}`);manifest=await res.json();chapterById=new Map(manifest.chapters.map(c=>[c.id,c]));fillJumpVolumes();renderLists();const hash=location.hash.match(/^#v(6|7)-(\d+)$/);const id=hash?`${hash[1]}-${Number(hash[2])}`:null;if(id&&chapterById.has(id))await openChapter(id);}catch(e){console.error(e);$("library-state").textContent="目录载入失败："+e.message;notify("无法读取同人续篇目录");}}
+async function boot(){theme();try{const res=await fetch("manifest.json",{cache:"no-store"});if(!res.ok)throw Error(`HTTP ${res.status}`);manifest=await res.json();chapterById=new Map(manifest.chapters.map(c=>[c.id,c]));fillJumpVolumes();renderLists();const hash=location.hash.match(/^#v(6|7)-(\d+)$/);const id=hash?`${hash[1]}-${Number(hash[2])}`:null;if(id&&chapterById.has(id))await openChapter(id);}catch(e){console.error(e);$("library-state").textContent="目录载入失败："+e.message;notify("无法读取同人续篇目录");}}
 boot();
