@@ -152,7 +152,9 @@
       "volume": 6,
       "number": 378,
       "title": "借力的规矩",
-      "batch": 0
+      "batch": 0,
+      "rewriteVersion": 1,
+      "rewriteHan": 4457
     },
     {
       "id": "6-379",
