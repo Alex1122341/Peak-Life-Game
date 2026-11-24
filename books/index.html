@@ -26,12 +26,12 @@
  <section class="reading-note"><h2>阅读与隐私</h2><p>《西雅图死亡档案》继续使用已有在线阅读器，不影响原有书签。其他小说从本机导入，正文、阅读进度与书签只保存在当前设备的浏览器中，不会上传到 GitHub。请保留原始 EPUB/TXT 备份；Safari 清除网站数据后，本机导入书籍可能丢失。</p><p><a href="./notes/">《蛊真人》阅读研究资料</a>　·　<a href="./README.md">使用说明</a></p></section>
 </main>
 <main id="reader-view" class="reader-page hidden">
- <div class="reader-toolbar"><button type="button" id="back-shelf" class="quiet">← 书架</button><span id="reader-meta"></span><div class="reader-actions"><button id="toc-toggle" type="button">目录</button><button id="bookmark-toggle" type="button" aria-label="收藏章节">☆</button><button id="theme-toggle" type="button">主题</button><button id="font-down" type="button">A−</button><button id="font-up" type="button">A＋</button></div></div>
- <div id="toc-panel" class="toc-panel hidden"><label>分卷 <select id="toc-volume"></select></label><label>筛选章节 <input id="toc-search" type="search" placeholder="输入章名或编号"></label><div id="toc-list" class="toc-list"></div></div>
+ <div class="reader-toolbar"><button type="button" id="back-shelf" class="quiet">← 书架</button><span id="reader-meta"></span><div class="reader-actions"><button id="toc-toggle" type="button">目录</button><button id="jump-toggle" type="button">跳章</button><button id="bookmark-toggle" type="button" aria-label="收藏章节">☆</button><button id="theme-toggle" type="button">主题</button><button id="font-down" type="button">A−</button><button id="font-up" type="button">A＋</button></div></div>
+ <div id="toc-panel" class="toc-panel hidden"><label>分卷 <select id="toc-volume"></select></label><label>筛选章节 <input id="toc-search" type="search" placeholder="输入章名或编号"></label><div class="toc-jump"><label>跳转方式 <select id="toc-jump-mode"><option value="volume">本卷节号</option><option value="all">全书序号</option></select></label><label>跳到第几节 <input id="toc-jump-number" type="number" min="1" inputmode="numeric" placeholder="输入数字"></label><button type="button" id="toc-jump-go" class="primary">跳转章节</button></div><p id="toc-jump-hint" class="toc-jump-hint"></p><div id="toc-list" class="toc-list"></div></div>
  <article class="chapter-reader"><p class="eyebrow" id="book-heading"></p><h1 id="chapter-heading"></h1><div id="chapter-text" class="chapter-text"></div><div class="chapter-bottom"><button id="prev-chapter" type="button">← 上一章</button><span id="position-label"></span><button id="next-chapter" type="button" class="primary">下一章 →</button></div></article>
 </main>
 <input id="file-picker" type="file" accept=".epub,.txt,application/epub+zip,text/plain" hidden>
 <div id="toast" role="status" aria-live="polite" class="toast hidden"></div>
-<script src="app.js?v=3" defer></script>
+<script src="app.js?v=4" defer></script>
 </body>
 </html>
