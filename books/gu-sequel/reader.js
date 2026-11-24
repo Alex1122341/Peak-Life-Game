@@ -14,7 +14,7 @@ function recordPosition(){if(!current||opening)return;state.current=current.id;s
 window.addEventListener("scroll",()=>{if(scrollQueued)return;scrollQueued=true;requestAnimationFrame(()=>{scrollQueued=false;recordPosition();});},{passive:true});
 window.addEventListener("pagehide",recordPosition);
 document.addEventListener("visibilitychange",()=>{if(document.visibilityState==="hidden")recordPosition();});
-function label(c){return `第${c.volume}卷 · 第${c.number}节：${c.title}`;}
+function label(c){return `第${c.volume}卷 · 第${c.number}节：${c.title}${c.rewriteVersion ? "【已重写】" : ""}`;}
 function isBookmarked(id){return state.bookmarks.includes(id);}
 function buildList(root,items){const frag=document.createDocumentFragment();for(const c of items){const b=document.createElement("button");b.type="button";b.textContent=label(c);b.className=current?.id===c.id?"active":"";b.addEventListener("click",()=>openChapter(c.id));frag.appendChild(b);}root.replaceChildren(frag);}
 function renderBookmarks(){buildList($("bookmark-list"),state.bookmarks.map(id=>chapterById.get(id)).filter(Boolean));}
@@ -43,7 +43,7 @@ async function readBatch(i){if(batchCache.has(i))return batchCache.get(i);const 
 function showReader(){ $("home-view").classList.add("hidden");$("reader-view").classList.remove("hidden");}
 function closeDrawer(){ $("drawer-wrap").classList.add("hidden");$("drawer-wrap").setAttribute("aria-hidden","true");document.body.style.overflow="";}
 function toggleDrawer(){const e=$("drawer-wrap"),opened=!e.classList.contains("hidden");e.classList.toggle("hidden",opened);e.setAttribute("aria-hidden",String(opened));document.body.style.overflow=opened?"":"hidden";if(!opened)renderLists();}
-async function openChapter(id){const c=chapterById.get(id);if(!c){notify("没有找到该节");return;}recordPosition();opening=true;current=c;showReader();closeDrawer();$("chapter-title").textContent=`第${c.number}节：${c.title}`;$("reader-book").textContent=c.volume===6?"第六卷 · 魔尊永生（续）":"第七卷 · 永生之外";
+async function openChapter(id){const c=chapterById.get(id);if(!c){notify("没有找到该节");return;}recordPosition();opening=true;current=c;showReader();closeDrawer();$("chapter-title").textContent=`第${c.number}节：${c.title}${c.rewriteVersion ? "【已重写】" : ""}`;$("reader-book").textContent=c.volume===6?"第六卷 · 魔尊永生（续）":"第七卷 · 永生之外";
  const index=manifest.chapters.findIndex(x=>x.id===id);$("reader-position").textContent=`${index+1} / ${manifest.publishedCount} 章`;
  $("previous-button").disabled=index===0;$("next-button").disabled=index===manifest.chapters.length-1;$("next-button").textContent=index===manifest.chapters.length-1?"已是最新章节":"下一节 →";
  $("bookmark-button").textContent=isBookmarked(id)?"★ 已收藏":"☆ 加书签";
