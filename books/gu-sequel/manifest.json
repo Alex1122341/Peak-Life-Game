@@ -125,21 +125,27 @@
       "volume": 6,
       "number": 375,
       "title": "旧阵的新主",
-      "batch": 0
+      "batch": 0,
+      "rewriteVersion": 1,
+      "rewriteHan": 4345
     },
     {
       "id": "6-376",
       "volume": 6,
       "number": 376,
       "title": "血可作证",
-      "batch": 0
+      "batch": 0,
+      "rewriteVersion": 1,
+      "rewriteHan": 4396
     },
     {
       "id": "6-377",
       "volume": 6,
       "number": 377,
       "title": "天庭的空簿",
-      "batch": 0
+      "batch": 0,
+      "rewriteVersion": 1,
+      "rewriteHan": 5018
     },
     {
       "id": "6-378",
