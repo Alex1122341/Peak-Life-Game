@@ -42,7 +42,7 @@ function fanContinuationCard(){
  const head=document.createElement("div");head.className="book-head";
  const cover=document.createElement("div");cover.className="cover fantasy";cover.textContent="蛊真人 续篇";
  const meta=document.createElement("div"),name=document.createElement("strong"),author=document.createElement("p"),tag=document.createElement("span");
- name.textContent="蛊真人 · 非官方续篇";author.textContent="第六卷第369—442节 · 74章";tag.className="tag";tag.textContent="同人创作 · 在线";
+ name.textContent="蛊真人 · 非官方续篇";author.textContent="第六卷第369—468节 · 100章 · 本卷完结";tag.className="tag";tag.textContent="同人创作 · 在线";
  meta.append(name,author,tag);head.append(cover,meta);
  const desc=document.createElement("p");desc.className="book-desc";
  desc.textContent="最新续写已上线。与原著单独阅读，支持目录、章节书签和浏览器本机阅读断点。";
