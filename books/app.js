@@ -25,6 +25,18 @@ else if(book.count){const p=readProgress(book.id),btn=document.createElement("bu
 else{const btn=document.createElement("button");btn.className="primary";btn.textContent="导入原文";btn.addEventListener("click",pickFile);tools.append(btn);}
 el.append(head,desc,tools);return el;}
 
+function originalOnlineCard(local){
+ const el=document.createElement("article");el.className="book";
+ const head=document.createElement("div");head.className="book-head";
+ const cover=document.createElement("div");cover.className="cover fantasy";cover.textContent="蛊真人";
+ const meta=document.createElement("div"),name=document.createElement("strong"),author=document.createElement("p"),tag=document.createElement("span");
+ name.textContent="蛊真人";author.textContent="原著 · 六卷 · 2331个章节位置";tag.className="tag";tag.textContent="原著 · 在线 · 未完结";
+ meta.append(name,author,tag);head.append(cover,meta);
+ const desc=document.createElement("p");desc.className="book-desc";desc.textContent="无需导入，在线分卷阅读；支持章节跳转、书签和阅读断点。";
+ const tools=document.createElement("div");tools.className="book-tools";const link=document.createElement("a");link.className="primary";link.href="./gu-original/";link.textContent="在线阅读";tools.append(link);
+ if(local&&local.count){const b=document.createElement("button");b.type="button";b.textContent="旧本机进度";b.addEventListener("click",()=>openReader(local,readProgress(local.id).chapter));tools.append(b);}
+ el.append(head,desc,tools);return el;
+}
 function fanContinuationCard(){
  const el=document.createElement("article");el.className="book";
  const head=document.createElement("div");head.className="book-head";
@@ -42,7 +54,7 @@ function fanContinuationCard(){
 async function renderShelf(){
  const grid=$("book-grid"),seattle={title:"西雅图死亡档案",author:"原创小说"};
  // Fixed titles must remain visible while the local database is being read or if Safari blocks it.
- grid.replaceChildren(card(seattle,"seattle"),card({title:"蛊真人",author:"蛊真人",id:"gu-zhen-ren"},"gu"),fanContinuationCard());
+ grid.replaceChildren(card(seattle,"seattle"),originalOnlineCard(),fanContinuationCard());
  let books=[],dbError=null;
  try{
    books=await getBooks();
@@ -53,13 +65,13 @@ async function renderShelf(){
    status("书架入口已显示，但当前浏览器无法读取本机小说：" +(e?.message||"请检查 Safari 网站数据设置"));
  }
  const gu=books.find(b=>b.id==="gu-zhen-ren");
- grid.replaceChildren(card(seattle,"seattle"),card(gu||{title:"蛊真人",author:"蛊真人",id:"gu-zhen-ren"},"gu"),fanContinuationCard());
+ grid.replaceChildren(card(seattle,"seattle"),originalOnlineCard(gu),fanContinuationCard());
  for(const b of books.filter(x=>x.id!=="gu-zhen-ren").sort((a,b)=>b.updatedAt-a.updatedAt))grid.appendChild(card(b,"local"));
  const add=document.createElement("article");add.className="book add-book";
  const btn=document.createElement("button");btn.textContent="＋ 添加下一本";btn.addEventListener("click",pickFile);
  const p=document.createElement("p");p.textContent="不限书籍数量 · 支持 EPUB / TXT\n每本独立保存断点与书签";
  add.append(btn,p);grid.append(add);
- $("book-count").textContent=dbError?"已显示书籍入口 · 本机存储不可用":(books.length+2)+" 本可读 · 可继续添加";
+ $("book-count").textContent=(3+books.filter(x=>x.id!=="gu-zhen-ren").length)+" 本可读 · 可继续添加";
 }
 function pickFile(){$("file-picker").click();}
 function parseXML(s,type="application/xml"){return new DOMParser().parseFromString(s,type);}

@@ -48,7 +48,7 @@
     <div class="reading-hub-title"><h2>我的书架</h2><a href="./books/">查看全部书籍 · 添加小说</a></div>
     <div class="reading-hub-grid">
       <a class="reading-hub-book" href="./novel/"><strong>西雅图死亡档案</strong><small>500章 · 原有在线阅读进度</small></a>
-      <a class="reading-hub-book" href="./books/"><strong>蛊真人</strong><small id="root-gu-book-state">打开书架 · 本机导入或继续阅读</small></a>
+      <a class="reading-hub-book" href="./books/gu-original/"><strong>蛊真人</strong><small id="root-gu-book-state">六卷 · 在线阅读 · 无需导入</small></a>
     </div>
     <div class="reading-hub-extra" id="root-extra-books"></div>
   </section>
@@ -331,9 +331,7 @@ window.__FUSHI_DEBUG__={getState:()=>structuredClone(s),getGallery:()=>structure
   if(!gu||!extra)return;
   function paint(items){
     if(!Array.isArray(items))return;
-    const guBook=items.find(b=>b&&b.id==="gu-zhen-ren");
-    if(guBook&&Number(guBook.count)>0)gu.textContent="已导入 "+guBook.count+" 节 · 继续阅读";
-    else gu.textContent="打开书架 · 导入或继续阅读";
+    gu.textContent="六卷 · 在线阅读 · 无需导入";
     extra.replaceChildren();
     for(const b of items.filter(b=>b&&b.id!=="gu-zhen-ren"&&b.title).slice(0,12)){
       const a=document.createElement("a");
