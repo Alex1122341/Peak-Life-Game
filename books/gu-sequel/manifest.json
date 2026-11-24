@@ -80,35 +80,45 @@
       "volume": 6,
       "number": 370,
       "title": "赌运者",
-      "batch": 0
+      "batch": 0,
+      "rewriteVersion": 1,
+      "rewriteHan": 4518
     },
     {
       "id": "6-371",
       "volume": 6,
       "number": 371,
       "title": "被遗忘的宫殿",
-      "batch": 0
+      "batch": 0,
+      "rewriteVersion": 1,
+      "rewriteHan": 4375
     },
     {
       "id": "6-372",
       "volume": 6,
       "number": 372,
       "title": "血脉之线",
-      "batch": 0
+      "batch": 0,
+      "rewriteVersion": 1,
+      "rewriteHan": 4303
     },
     {
       "id": "6-373",
       "volume": 6,
       "number": 373,
       "title": "断线之后",
-      "batch": 0
+      "batch": 0,
+      "rewriteVersion": 1,
+      "rewriteHan": 4292
     },
     {
       "id": "6-374",
       "volume": 6,
       "number": 374,
       "title": "以退为尺",
-      "batch": 0
+      "batch": 0,
+      "rewriteVersion": 1,
+      "rewriteHan": 4426
     },
     {
       "id": "6-375",
