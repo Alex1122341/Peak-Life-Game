@@ -2,7 +2,7 @@
   "title": "蛊真人 · 非官方同人续篇",
   "author": "个人同人创作（非原作者）",
   "description": "承接用户私人 EPUB 的第六卷第368节；本项目为非官方续篇，原著小说并未完结。",
-  "publishedCount": 74,
+  "publishedCount": 100,
   "plannedCount": 700,
   "formalVolumes": [
     {
@@ -47,6 +47,24 @@
       "volume": 6,
       "start": 433,
       "end": 442
+    },
+    {
+      "path": "vol6_443_452.txt",
+      "volume": 6,
+      "start": 443,
+      "end": 452
+    },
+    {
+      "path": "vol6_453_462.txt",
+      "volume": 6,
+      "start": 453,
+      "end": 462
+    },
+    {
+      "path": "vol6_463_468.txt",
+      "volume": 6,
+      "start": 463,
+      "end": 468
     }
   ],
   "chapters": [
@@ -567,6 +585,188 @@
       "number": 442,
       "title": "借一盏灯看路",
       "batch": 4
+    },
+    {
+      "id": "6-443",
+      "volume": 6,
+      "number": 443,
+      "title": "灯下无名台",
+      "batch": 5
+    },
+    {
+      "id": "6-444",
+      "volume": 6,
+      "number": 444,
+      "title": "不可重开的门",
+      "batch": 5
+    },
+    {
+      "id": "6-445",
+      "volume": 6,
+      "number": 445,
+      "title": "无路可走的商客",
+      "batch": 5
+    },
+    {
+      "id": "6-446",
+      "volume": 6,
+      "number": 446,
+      "title": "两道封条",
+      "batch": 5
+    },
+    {
+      "id": "6-447",
+      "volume": 6,
+      "number": 447,
+      "title": "气果两生",
+      "batch": 5
+    },
+    {
+      "id": "6-448",
+      "volume": 6,
+      "number": 448,
+      "title": "熄灯",
+      "batch": 5
+    },
+    {
+      "id": "6-449",
+      "volume": 6,
+      "number": 449,
+      "title": "不必同桌",
+      "batch": 5
+    },
+    {
+      "id": "6-450",
+      "volume": 6,
+      "number": 450,
+      "title": "北风里的金帖",
+      "batch": 5
+    },
+    {
+      "id": "6-451",
+      "volume": 6,
+      "number": 451,
+      "title": "断气桥",
+      "batch": 5
+    },
+    {
+      "id": "6-452",
+      "volume": 6,
+      "number": 452,
+      "title": "以石为价",
+      "batch": 5
+    },
+    {
+      "id": "6-453",
+      "volume": 6,
+      "number": 453,
+      "title": "不写进盟约的事",
+      "batch": 6
+    },
+    {
+      "id": "6-454",
+      "volume": 6,
+      "number": 454,
+      "title": "越界之灰",
+      "batch": 6
+    },
+    {
+      "id": "6-455",
+      "volume": 6,
+      "number": 455,
+      "title": "至尊仙窍的裂谷",
+      "batch": 6
+    },
+    {
+      "id": "6-456",
+      "volume": 6,
+      "number": 456,
+      "title": "长生天的缺口",
+      "batch": 6
+    },
+    {
+      "id": "6-457",
+      "volume": 6,
+      "number": 457,
+      "title": "不再索取的价钱",
+      "batch": 6
+    },
+    {
+      "id": "6-458",
+      "volume": 6,
+      "number": 458,
+      "title": "一程归路",
+      "batch": 6
+    },
+    {
+      "id": "6-459",
+      "volume": 6,
+      "number": 459,
+      "title": "天庭还有门",
+      "batch": 6
+    },
+    {
+      "id": "6-460",
+      "volume": 6,
+      "number": 460,
+      "title": "未归者归来",
+      "batch": 6
+    },
+    {
+      "id": "6-461",
+      "volume": 6,
+      "number": 461,
+      "title": "血缘之外的信",
+      "batch": 6
+    },
+    {
+      "id": "6-462",
+      "volume": 6,
+      "number": 462,
+      "title": "梦中未写完的歌",
+      "batch": 6
+    },
+    {
+      "id": "6-463",
+      "volume": 6,
+      "number": 463,
+      "title": "没有姓名的旧册",
+      "batch": 7
+    },
+    {
+      "id": "6-464",
+      "volume": 6,
+      "number": 464,
+      "title": "留得一线元气",
+      "batch": 7
+    },
+    {
+      "id": "6-465",
+      "volume": 6,
+      "number": 465,
+      "title": "长生天的旧约",
+      "batch": 7
+    },
+    {
+      "id": "6-466",
+      "volume": 6,
+      "number": 466,
+      "title": "无人记得的阵谷",
+      "batch": 7
+    },
+    {
+      "id": "6-467",
+      "volume": 6,
+      "number": 467,
+      "title": "第三道痕",
+      "batch": 7
+    },
+    {
+      "id": "6-468",
+      "volume": 6,
+      "number": 468,
+      "title": "天地之外",
+      "batch": 7
     }
   ]
 }

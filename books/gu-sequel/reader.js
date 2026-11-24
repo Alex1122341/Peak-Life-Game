@@ -19,7 +19,7 @@ function isBookmarked(id){return state.bookmarks.includes(id);}
 function buildList(root,items){const frag=document.createDocumentFragment();for(const c of items){const b=document.createElement("button");b.type="button";b.textContent=label(c);b.className=current?.id===c.id?"active":"";b.addEventListener("click",()=>openChapter(c.id));frag.appendChild(b);}root.replaceChildren(frag);}
 function renderBookmarks(){buildList($("bookmark-list"),state.bookmarks.map(id=>chapterById.get(id)).filter(Boolean));}
 function renderLists(){buildList($("home-chapters"),manifest.chapters);filterToc();renderBookmarks();$("drawer-count").textContent=`${manifest.publishedCount} 章已发布 · 规划续写 ${manifest.plannedCount} 章`;
- const first=manifest.chapters[0],last=manifest.chapters.at(-1);$("library-state").textContent=`已发布 ${manifest.publishedCount} 章 · 第${first.volume}卷第${first.number}节至第${last.volume}卷第${last.number}节 · ${manifest.publishedCount}/${manifest.plannedCount} 章`;
+ const first=manifest.chapters[0],last=manifest.chapters.at(-1);$("library-state").textContent=`已发布 ${manifest.publishedCount} 章 · 第${first.volume}卷第${first.number}节至第${last.volume}卷第${last.number}节 · ${manifest.publishedCount}/${manifest.plannedCount} 章${last.volume===6&&last.number===468?" · 第六卷续写完结，终卷尚未发布":""}`;
  $("continue-button").disabled=false;
 }
 
