@@ -1,0 +1,268 @@
+{
+  "title": "蛊真人 · 非官方同人续篇",
+  "author": "个人同人创作（非原作者）",
+  "description": "承接用户私人 EPUB 的第六卷第368节；本项目为非官方续篇，原著小说并未完结。",
+  "publishedCount": 34,
+  "plannedCount": 700,
+  "formalVolumes": [
+    {
+      "volume": 6,
+      "name": "魔尊永生",
+      "existingThrough": 368,
+      "continuedThrough": 468
+    },
+    {
+      "volume": 7,
+      "name": "永生之外",
+      "plannedChapters": 600
+    }
+  ],
+  "batches": [
+    {
+      "path": "vol6_369_402.txt",
+      "volume": 6,
+      "start": 369,
+      "end": 402
+    }
+  ],
+  "chapters": [
+    {
+      "id": "6-369",
+      "volume": 6,
+      "number": 369,
+      "title": "一张不能不付的账",
+      "batch": 0
+    },
+    {
+      "id": "6-370",
+      "volume": 6,
+      "number": 370,
+      "title": "赌运者",
+      "batch": 0
+    },
+    {
+      "id": "6-371",
+      "volume": 6,
+      "number": 371,
+      "title": "被遗忘的宫殿",
+      "batch": 0
+    },
+    {
+      "id": "6-372",
+      "volume": 6,
+      "number": 372,
+      "title": "血脉之线",
+      "batch": 0
+    },
+    {
+      "id": "6-373",
+      "volume": 6,
+      "number": 373,
+      "title": "断线之后",
+      "batch": 0
+    },
+    {
+      "id": "6-374",
+      "volume": 6,
+      "number": 374,
+      "title": "以退为尺",
+      "batch": 0
+    },
+    {
+      "id": "6-375",
+      "volume": 6,
+      "number": 375,
+      "title": "旧阵的新主",
+      "batch": 0
+    },
+    {
+      "id": "6-376",
+      "volume": 6,
+      "number": 376,
+      "title": "血可作证",
+      "batch": 0
+    },
+    {
+      "id": "6-377",
+      "volume": 6,
+      "number": 377,
+      "title": "天庭的空簿",
+      "batch": 0
+    },
+    {
+      "id": "6-378",
+      "volume": 6,
+      "number": 378,
+      "title": "借力的规矩",
+      "batch": 0
+    },
+    {
+      "id": "6-379",
+      "volume": 6,
+      "number": 379,
+      "title": "裂隙里的仙元",
+      "batch": 0
+    },
+    {
+      "id": "6-380",
+      "volume": 6,
+      "number": 380,
+      "title": "不在名册的人",
+      "batch": 0
+    },
+    {
+      "id": "6-381",
+      "volume": 6,
+      "number": 381,
+      "title": "先落的筹码",
+      "batch": 0
+    },
+    {
+      "id": "6-382",
+      "volume": 6,
+      "number": 382,
+      "title": "星雾为屏",
+      "batch": 0
+    },
+    {
+      "id": "6-383",
+      "volume": 6,
+      "number": 383,
+      "title": "第二次赌运",
+      "batch": 0
+    },
+    {
+      "id": "6-384",
+      "volume": 6,
+      "number": 384,
+      "title": "借来的好运",
+      "batch": 0
+    },
+    {
+      "id": "6-385",
+      "volume": 6,
+      "number": 385,
+      "title": "谁的好运",
+      "batch": 0
+    },
+    {
+      "id": "6-386",
+      "volume": 6,
+      "number": 386,
+      "title": "中洲之外",
+      "batch": 0
+    },
+    {
+      "id": "6-387",
+      "volume": 6,
+      "number": 387,
+      "title": "价钱从来不平",
+      "batch": 0
+    },
+    {
+      "id": "6-388",
+      "volume": 6,
+      "number": 388,
+      "title": "三息之赌",
+      "batch": 0
+    },
+    {
+      "id": "6-389",
+      "volume": 6,
+      "number": 389,
+      "title": "回不来的好运",
+      "batch": 0
+    },
+    {
+      "id": "6-390",
+      "volume": 6,
+      "number": 390,
+      "title": "无人下令的守卫",
+      "batch": 0
+    },
+    {
+      "id": "6-391",
+      "volume": 6,
+      "number": 391,
+      "title": "阵纹的时差",
+      "batch": 0
+    },
+    {
+      "id": "6-392",
+      "volume": 6,
+      "number": 392,
+      "title": "三十息的损失",
+      "batch": 0
+    },
+    {
+      "id": "6-393",
+      "volume": 6,
+      "number": 393,
+      "title": "归名簿外",
+      "batch": 0
+    },
+    {
+      "id": "6-394",
+      "volume": 6,
+      "number": 394,
+      "title": "两种血脉",
+      "batch": 0
+    },
+    {
+      "id": "6-395",
+      "volume": 6,
+      "number": 395,
+      "title": "爱情不听命令",
+      "batch": 0
+    },
+    {
+      "id": "6-396",
+      "volume": 6,
+      "number": 396,
+      "title": "愿意留下的人",
+      "batch": 0
+    },
+    {
+      "id": "6-397",
+      "volume": 6,
+      "number": 397,
+      "title": "不肯下注的人",
+      "batch": 0
+    },
+    {
+      "id": "6-398",
+      "volume": 6,
+      "number": 398,
+      "title": "旧名不是姓名",
+      "batch": 0
+    },
+    {
+      "id": "6-399",
+      "volume": 6,
+      "number": 399,
+      "title": "有价的选择",
+      "batch": 0
+    },
+    {
+      "id": "6-400",
+      "volume": 6,
+      "number": 400,
+      "title": "星雾之外的门槛",
+      "batch": 0
+    },
+    {
+      "id": "6-401",
+      "volume": 6,
+      "number": 401,
+      "title": "第二张名册",
+      "batch": 0
+    },
+    {
+      "id": "6-402",
+      "volume": 6,
+      "number": 402,
+      "title": "未付完的账",
+      "batch": 0
+    }
+  ]
+}

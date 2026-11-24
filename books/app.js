@@ -25,10 +25,24 @@ else if(book.count){const p=readProgress(book.id),btn=document.createElement("bu
 else{const btn=document.createElement("button");btn.className="primary";btn.textContent="导入原文";btn.addEventListener("click",pickFile);tools.append(btn);}
 el.append(head,desc,tools);return el;}
 
+function fanContinuationCard(){
+ const el=document.createElement("article");el.className="book";
+ const head=document.createElement("div");head.className="book-head";
+ const cover=document.createElement("div");cover.className="cover fantasy";cover.textContent="蛊真人 续篇";
+ const meta=document.createElement("div"),name=document.createElement("strong"),author=document.createElement("p"),tag=document.createElement("span");
+ name.textContent="蛊真人 · 非官方续篇";author.textContent="第六卷第369—402节 · 34章";tag.className="tag";tag.textContent="同人创作 · 在线";
+ meta.append(name,author,tag);head.append(cover,meta);
+ const desc=document.createElement("p");desc.className="book-desc";
+ desc.textContent="最新续写已上线。与原著单独阅读，支持目录、章节书签和浏览器本机阅读断点。";
+ const tools=document.createElement("div");tools.className="book-tools";
+ const link=document.createElement("a");link.className="primary";link.href="./gu-sequel/";link.textContent="在线阅读续篇";
+ tools.append(link);el.append(head,desc,tools);return el;
+}
+
 async function renderShelf(){
  const grid=$("book-grid"),seattle={title:"西雅图死亡档案",author:"原创小说"};
  // Fixed titles must remain visible while the local database is being read or if Safari blocks it.
- grid.replaceChildren(card(seattle,"seattle"),card({title:"蛊真人",author:"蛊真人",id:"gu-zhen-ren"},"gu"));
+ grid.replaceChildren(card(seattle,"seattle"),card({title:"蛊真人",author:"蛊真人",id:"gu-zhen-ren"},"gu"),fanContinuationCard());
  let books=[],dbError=null;
  try{
    books=await getBooks();
@@ -39,13 +53,13 @@ async function renderShelf(){
    status("书架入口已显示，但当前浏览器无法读取本机小说：" +(e?.message||"请检查 Safari 网站数据设置"));
  }
  const gu=books.find(b=>b.id==="gu-zhen-ren");
- grid.replaceChildren(card(seattle,"seattle"),card(gu||{title:"蛊真人",author:"蛊真人",id:"gu-zhen-ren"},"gu"));
+ grid.replaceChildren(card(seattle,"seattle"),card(gu||{title:"蛊真人",author:"蛊真人",id:"gu-zhen-ren"},"gu"),fanContinuationCard());
  for(const b of books.filter(x=>x.id!=="gu-zhen-ren").sort((a,b)=>b.updatedAt-a.updatedAt))grid.appendChild(card(b,"local"));
  const add=document.createElement("article");add.className="book add-book";
  const btn=document.createElement("button");btn.textContent="＋ 添加下一本";btn.addEventListener("click",pickFile);
  const p=document.createElement("p");p.textContent="不限书籍数量 · 支持 EPUB / TXT\n每本独立保存断点与书签";
  add.append(btn,p);grid.append(add);
- $("book-count").textContent=dbError?"已显示书籍入口 · 本机存储不可用":(books.length+1)+" 本可读 · 可继续添加";
+ $("book-count").textContent=dbError?"已显示书籍入口 · 本机存储不可用":(books.length+2)+" 本可读 · 可继续添加";
 }
 function pickFile(){$("file-picker").click();}
 function parseXML(s,type="application/xml"){return new DOMParser().parseFromString(s,type);}
