@@ -85,15 +85,17 @@ def verify(root, profile, base_ref=None, scope=None):
     if base_ref:
         repo_root = Path(subprocess.check_output(['git', '-C', str(root), 'rev-parse', '--show-toplevel'], text=True).strip())
         prefix = root.resolve().relative_to(repo_root.resolve())
-        def baseline(rel):
-            checked_path(root, rel)
-            path = (prefix / rel).as_posix()
-            return subprocess.check_output(['git', '-C', str(repo_root), 'show', f'{base_ref}:{path}']).decode('utf-8-sig')
-        old, old_meta = load_work(root, profile, baseline)
+        def at_ref(ref):
+            def read_at_ref(rel):
+                checked_path(root, rel)
+                path = (prefix / rel).as_posix()
+                return subprocess.check_output(['git', '-C', str(repo_root), 'show', f'{ref}:{path}']).decode('utf-8-sig')
+            return read_at_ref
+        old, old_meta = load_work(root, profile, at_ref(base_ref))
         missing = set(old) - set(chapters)
         if missing:
             raise ValueError(f'Deleted chapter IDs: {sorted(missing)}')
-    rewritten, changed = [], []
+    rewritten, changed, metadata_corrected = [], [], []
     duplicates = {}
     for key, (title, body, _) in chapters.items():
         hits = scan(title + '\n' + body, profile)
@@ -102,8 +104,37 @@ def verify(root, profile, base_ref=None, scope=None):
         info = meta[key]
         n = len(HAN.findall(body))
         is_changed = old is not None and (key not in old or body != old[key][1])
-        if old is not None and key in old and title != old[key][0]:
-            raise ValueError(f'Existing chapter title changed: {key}')
+        metadata_correction = False
+        if old is not None and key in old:
+            title_changed = title != old[key][0]
+            marker_changed = info.get('rewriteVersion') != old_meta[key].get('rewriteVersion')
+            if title_changed or (marker_changed and not is_changed):
+                # Only accept an explicit, chapter-specific correction backed by a
+                # previously merged, genuinely different rewrite in Git history.
+                correction = profile.get('approved_metadata_corrections', {}).get(key, {})
+                expected = (not is_changed and correction.get('from_title') == old[key][0]
+                            and correction.get('to_title') == title
+                            and not old_meta[key].get('rewriteVersion')
+                            and info.get('rewriteVersion') == correction.get('rewrite_version') == 1
+                            and info.get('rewriteHan') == correction.get('han') == n
+                            and {k: v for k, v in info.items() if k not in ('title', 'rewriteVersion', 'rewriteHan')}
+                            == {k: v for k, v in old_meta[key].items() if k not in ('title', 'rewriteVersion', 'rewriteHan')})
+                if expected:
+                    original_ref, rewrite_ref = correction['original_commit'], correction['rewrite_commit']
+                    if not all(re.fullmatch(r'[0-9a-f]{40}', ref) for ref in (original_ref, rewrite_ref)):
+                        raise ValueError(f'Invalid historical correction refs: {key}')
+                    subprocess.run(['git', '-C', str(repo_root), 'merge-base', '--is-ancestor', original_ref, rewrite_ref], check=True)
+                    subprocess.run(['git', '-C', str(repo_root), 'merge-base', '--is-ancestor', rewrite_ref, base_ref], check=True)
+                    original, _ = load_work(root, profile, at_ref(original_ref))
+                    prior, _ = load_work(root, profile, at_ref(rewrite_ref))
+                    metadata_correction = (key in original and key in prior
+                                           and original[key][0] == prior[key][0] == old[key][0]
+                                           and original[key][1] != prior[key][1] == body)
+                if not metadata_correction:
+                    raise ValueError(f'Unauthorized title or rewrite marker correction: {key}')
+                if scope and (info['volume'] != scope[0] or not scope[1] <= info['number'] <= scope[2]):
+                    raise ValueError(f'Out-of-scope metadata correction: {key}')
+                metadata_corrected.append(key)
         if is_changed:
             changed.append(key)
             if scope and (info['volume'] != scope[0] or not scope[1] <= info['number'] <= scope[2]):
@@ -119,7 +150,7 @@ def verify(root, profile, base_ref=None, scope=None):
                 raise ValueError(f'Invalid rewrite version: {key}')
             if info.get('rewriteHan') != n or n < profile['min_han']:
                 raise ValueError(f'Incorrect rewrite length or marker: {key} ({n})')
-            if old is not None and key in old and not is_changed and info.get('rewriteVersion') != old_meta[key].get('rewriteVersion'):
+            if old is not None and key in old and not is_changed and not metadata_correction and info.get('rewriteVersion') != old_meta[key].get('rewriteVersion'):
                 raise ValueError(f'False rewrite marker on unchanged chapter: {key}')
             rewritten.append({'id': key, 'han': n})
         if info.get('rewriteVersion') or is_changed:
@@ -132,7 +163,7 @@ def verify(root, profile, base_ref=None, scope=None):
     if scope and old is None:
         raise ValueError('--scope requires --base-ref')
     return {'work': profile['work_id'], 'chapters_checked': len(chapters), 'changed': changed,
-            'rewritten': rewritten, 'semantic_review_required': True}
+            'rewritten': rewritten, 'metadata_corrected': metadata_corrected, 'semantic_review_required': True}
 
 
 def main():
