@@ -45,7 +45,7 @@ function fanContinuationCard(){
  name.textContent="蛊真人 · 非官方续篇";author.textContent="第六卷第369—468节 · 100章 · 本卷完结";tag.className="tag";tag.textContent="同人创作 · 在线";
  meta.append(name,author,tag);head.append(cover,meta);
  const desc=document.createElement("p");desc.className="book-desc";
- desc.textContent="第370—378节已重写（9节）。第369节此前已更新；原有章节、书签和断点保留。";
+ desc.textContent="第369—378节已重写（10节）。原有章节、书签和断点保留。";
  const tools=document.createElement("div");tools.className="book-tools";
  const link=document.createElement("a");link.className="primary";link.href="./gu-sequel/";link.textContent="在线阅读续篇";
  const latest=document.createElement("a");latest.href="./gu-sequel/#v6-378";latest.textContent="最新重写 · 第378节";tools.append(link,latest);el.append(head,desc,tools);
