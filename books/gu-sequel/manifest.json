@@ -72,8 +72,10 @@
       "id": "6-369",
       "volume": 6,
       "number": 369,
-      "title": "一张不能不付的账",
-      "batch": 0
+      "title": "方源探阵",
+      "batch": 0,
+      "rewriteVersion": 1,
+      "rewriteHan": 5449
     },
     {
       "id": "6-370",
