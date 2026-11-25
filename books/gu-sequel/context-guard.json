@@ -24,5 +24,16 @@
     "待补正文",
     "TODO",
     "placeholder"
-  ]
+  ],
+  "approved_metadata_corrections": {
+    "6-369": {
+      "from_title": "一张不能不付的账",
+      "to_title": "方源探阵",
+      "original_commit": "b096af314eb1dd9541c23327aba4872a27aa646c",
+      "rewrite_commit": "6896813af2197bb95f2e6be57920d9f6e49bee32",
+      "rewrite_version": 1,
+      "han": 5449,
+      "reason": "User-authorized title rename and missing rewrite marker correction; original rewrite already merged in PR #18. Body must remain identical."
+    }
+  }
 }
